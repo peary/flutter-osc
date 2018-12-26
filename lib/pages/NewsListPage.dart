@@ -94,17 +94,17 @@ class NewsListPageState extends State<NewsListPage> {
               slideData = _slideData;
             } else {
               // 是加载更多，则需要将取到的news数据追加到原来的数据后面
-              List list1 = new List();
+              List newData = new List();
               // 添加原来的数据
-              list1.addAll(listData);
+              newData.addAll(listData);
               // 添加新取到的数据
-              list1.addAll(_listData);
+              newData.addAll(_listData);
               // 判断是否获取了所有的数据，如果是，则需要显示底部的"我也是有底线的"布局
-              if (list1.length >= listTotalSize) {
-                list1.add(Constants.END_LINE_TAG);
+              if (newData.length >= listTotalSize) {
+                newData.add(Constants.END_LINE_TAG);
               }
               // 给列表数据赋值
-              listData = list1;
+              listData = newData;
               // 轮播图数据
               slideData = _slideData;
             }
@@ -187,22 +187,23 @@ class NewsListPageState extends State<NewsListPage> {
       ],
     );
     var thumbImgUrl = itemData['thumb'];
-    var thumbImg = new Container(
-      margin: const EdgeInsets.all(10.0),
-      width: 60.0,
-      height: 60.0,
-      decoration: new BoxDecoration(
-        shape: BoxShape.circle,
-        color: const Color(0xFFECECEC),
-        image: new DecorationImage(
-            image: new ExactAssetImage('./images/ic_img_default.jpg'),
-            fit: BoxFit.cover),
-        border: new Border.all(
-          color: const Color(0xFFECECEC),
-          width: 2.0,
-        ),
-      ),
-    );
+    var thumbImg = new Container();
+    // var thumbImg = new Container(
+    //   margin: const EdgeInsets.all(10.0),
+    //   width: 60.0,
+    //   height: 60.0,
+    //   decoration: new BoxDecoration(
+    //     shape: BoxShape.circle,
+    //     color: const Color(0xFFECECEC),
+    //     image: new DecorationImage(
+    //         image: new ExactAssetImage('./images/ic_img_default.jpg'),
+    //         fit: BoxFit.cover),
+    //     border: new Border.all(
+    //       color: const Color(0xFFECECEC),
+    //       width: 2.0,
+    //     ),
+    //   ),
+    // );
     if (thumbImgUrl != null && thumbImgUrl.length > 0) {
       thumbImg = new Container(
         margin: const EdgeInsets.all(10.0),
@@ -212,7 +213,9 @@ class NewsListPageState extends State<NewsListPage> {
           shape: BoxShape.circle,
           color: const Color(0xFFECECEC),
           image: new DecorationImage(
-              image: new NetworkImage(thumbImgUrl), fit: BoxFit.cover),
+              image: new NetworkImage(thumbImgUrl), 
+              fit: BoxFit.cover
+          ),
           border: new Border.all(
             color: const Color(0xFFECECEC),
             width: 2.0,

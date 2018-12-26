@@ -33,4 +33,7 @@ class Api {
 
   // 开源活动
   static final String EVENT_LIST = "http://osc.yubo725.top/events/";
+
+  // 微博热搜
+  static final String WEIBO_HOT_TOPICS = "https://s.weibo.com/top/summary?Refer=top_hot&topnav=1&wvr=6";
 }

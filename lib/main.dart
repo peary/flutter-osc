@@ -21,13 +21,14 @@ class MyOSCClient extends StatefulWidget {
 
 class MyOSCClientState extends State<MyOSCClient> {
   Color themeColor = ThemeUtils.currentColorTheme;
+
   int _tabIndex = 0;
   final tabTextStyleNormal = new TextStyle(color: const Color(0xff969696));
   final tabTextStyleSelected = new TextStyle(color: const Color(0xff63ca6c));
 
   var tabImages;
   var _body;
-  var appBarTitles = ['资讯', '动弹', '发现', '我的'];
+  var appBarTitles = ['首页', '推荐', '热点', '我的'];
 
   Image getTabImage(path) {
     return new Image.asset(path, width: 20.0, height: 20.0);
@@ -74,7 +75,8 @@ class MyOSCClientState extends State<MyOSCClient> {
     _body = new IndexedStack(
       children: <Widget>[
         new NewsListPage(),
-        new TweetsListPage(),
+        new NewsListPage(),
+        // new TweetsListPage(),
         new DiscoveryPage(),
         new MyInfoPage()
       ],
