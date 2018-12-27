@@ -7,6 +7,7 @@ import 'package:flutter_osc/util/ThemeUtils.dart';
 import 'pages/NewsListPage.dart';
 import 'pages/TweetsListPage.dart';
 import 'pages/DiscoveryPage.dart';
+import 'pages/HotPage.dart';
 import 'pages/MyInfoPage.dart';
 import './widgets/MyDrawer.dart';
 
@@ -20,11 +21,12 @@ class MyOSCClient extends StatefulWidget {
 }
 
 class MyOSCClientState extends State<MyOSCClient> {
-  final appBarTitles = ['资讯', '动弹', '发现', '我的'];
+  final appBarTitles = ['首页', '推荐', '热点', '我的'];
   final tabTextStyleSelected = new TextStyle(color: const Color(0xff63ca6c));
   final tabTextStyleNormal = new TextStyle(color: const Color(0xff969696));
 
   Color themeColor = ThemeUtils.currentColorTheme;
+
   int _tabIndex = 0;
 
   var tabImages;
@@ -53,7 +55,7 @@ class MyOSCClientState extends State<MyOSCClient> {
     pages = <Widget>[
       new NewsListPage(),
       new TweetsListPage(),
-      new DiscoveryPage(),
+      new HotPage(),
       new MyInfoPage()
     ];
     if (tabImages == null) {
@@ -63,12 +65,12 @@ class MyOSCClientState extends State<MyOSCClient> {
           getTabImage('images/ic_nav_news_actived.png')
         ],
         [
-          getTabImage('images/ic_nav_tweet_normal.png'),
-          getTabImage('images/ic_nav_tweet_actived.png')
-        ],
-        [
           getTabImage('images/ic_nav_discover_normal.png'),
           getTabImage('images/ic_nav_discover_actived.png')
+        ],
+        [
+          getTabImage('images/ic_nav_tweet_normal.png'),
+          getTabImage('images/ic_nav_tweet_actived.png')
         ],
         [
           getTabImage('images/ic_nav_my_normal.png'),
@@ -76,6 +78,16 @@ class MyOSCClientState extends State<MyOSCClient> {
         ]
       ];
     }
+    _body = new IndexedStack(
+      children: <Widget>[
+        new NewsListPage(),
+        new NewsListPage(),
+        // new TweetsListPage(),
+        new DiscoveryPage(),
+        new MyInfoPage()
+      ],
+      index: _tabIndex,
+    );
   }
 
   TextStyle getTabTextStyle(int curIndex) {

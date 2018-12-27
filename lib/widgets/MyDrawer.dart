@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_osc/constants/Constants.dart';
+import 'package:flutter_osc/events/LogoutEvent.dart';
+import '../util/DataUtils.dart';
 import '../pages/AboutPage.dart';
 import '../pages/BlackHousePage.dart';
 import '../pages/PublishTweetPage.dart';
-import '../pages/SettingsPage.dart';
+import '../pages/ChangeThemePage.dart';
+
 
 class MyDrawer extends StatelessWidget {
   // 菜单文本前面的图标大小
@@ -16,7 +20,7 @@ class MyDrawer extends StatelessWidget {
     height: ARROW_ICON_WIDTH,
   );
   // 菜单的文本
-  List menuTitles = ['发布动弹', '动弹小黑屋', '关于', '设置'];
+  List menuTitles = ['设置主题', '退出登录', '关于'];
   // 菜单文本前面的图标
   List menuIcons = [
     './images/leftmenu/ic_fabu.png',
@@ -85,8 +89,8 @@ class MyDrawer extends StatelessWidget {
       // Row组件构成item的一行
       child: new Row(
         children: <Widget>[
-          // 菜单item的图标
-          getIconImage(menuIcons[index]),
+          // // 菜单item的图标
+          // getIconImage(menuIcons[index]),
           // 菜单item的文本，需要
           new Expanded(
             child: new Text(
@@ -104,27 +108,23 @@ class MyDrawer extends StatelessWidget {
       onTap: () {
         switch (index) {
           case 0:
-            // 发布动弹
+            // 设置主题
             Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
-              return new PublishTweetPage();
+              return new ChangeThemePage();
             }));
             break;
           case 1:
-            // 小黑屋
-            Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
-              return new BlackHousePage();
-            }));
+            // 退出登录
+            DataUtils.clearLoginInfo().then((arg) {
+              Navigator.of(context).pop();
+              Constants.eventBus.fire(new LogoutEvent());
+              print("event fired!");
+            });
             break;
           case 2:
             // 关于
             Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
               return new AboutPage();
-            }));
-            break;
-          case 3:
-            // 设置
-            Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
-              return new SettingsPage();
             }));
             break;
         }

@@ -70,7 +70,7 @@ class SlideViewState extends State<SlideView> with SingleTickerProviderStateMixi
                 color: const Color(0x50000000),
                 child: new Padding(
                   padding: const EdgeInsets.all(6.0),
-                  child: new Text(title, style: new TextStyle(color: Colors.white, fontSize: 15.0)),
+                  child: new Text(title, style: new TextStyle(color: Colors.white, fontSize: 15.0,)),
                 )
               )
             ],
