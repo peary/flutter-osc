@@ -37,16 +37,17 @@ class HotPageState extends State<HotPage> {
         if (map['ok'] == 1) {
           // hotTopics.addAll(map['data']['cards'][0]['card_group']);
 
-          TopicItem topic = new TopicItem();
           var items = map['data']['cards'][0]['card_group'];
           for (var i=0; i<items.length; i++) {
             var item = items[i];
+            TopicItem topic = new TopicItem();
             topic.topic = item['desc'];
             topic.gotoUrl = item['scheme'];
             topic.hotDegree = item['desc_extr'];
             topic.rank = (i + 1).toString();
             hotTopics.add(topic);
           }
+          print(hotTopics.length);
         }
       }
     });
