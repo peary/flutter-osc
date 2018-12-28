@@ -39,7 +39,7 @@ class NewsDetailPageState extends State<NewsDetailPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> titleContent = [];
-    titleContent.add(new Text("资讯详情", style: new TextStyle(color: Colors.white),));
+    titleContent.add(new Text(" 资讯详情 ", style: new TextStyle(color: Colors.white),));
     if (!loaded) {
       titleContent.add(new CupertinoActivityIndicator());
     }

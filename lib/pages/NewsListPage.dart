@@ -72,20 +72,21 @@ class NewsListPageState extends State<NewsListPage> {
   // 从网络获取数据，isLoadMore表示是否是加载更多数据
   getNewsList(bool isLoadMore) {
     String url = Api.NEWS_LIST;
-    url += "?pageIndex=$curPage&pageSize=10";
+    int page_size = 10;
+    url += "?page=$curPage&per_page=$page_size";
     print(url);
     NetUtils.get(url).then((data) {
       if (data != null) {
         // 将接口返回的json字符串解析为map类型
-        Map<String, dynamic> map = json.decode(data);
-        if (map['code'] == 0) {
+        List result = json.decode(data);
+        
+        if (result.length > 0) {
           // code=0表示请求成功
-          var msg = map['msg'];
           // total表示资讯总条数
-          listTotalSize = msg['news']['total'];
+          listTotalSize = 500;
           // data为数据内容，其中包含slide和news两部分，分别表示头部轮播图数据，和下面的列表数据
-          var _listData = msg['news']['data'];
-          var _slideData = msg['slide'];
+          var _slideData = result.sublist(0, 3);
+          var _listData = result.sublist(3, page_size);
           setState(() {
             if (!isLoadMore) {
               // 不是加载更多，则直接为变量赋值
@@ -146,7 +147,7 @@ class NewsListPageState extends State<NewsListPage> {
     var titleRow = new Row(
       children: <Widget>[
         new Expanded(
-          child: new Text(itemData['title'], style: titleTextStyle),
+          child: new Text(itemData['title']['rendered'], style: titleTextStyle),
         )
       ],
     );
@@ -159,7 +160,7 @@ class NewsListPageState extends State<NewsListPage> {
             shape: BoxShape.circle,
             color: const Color(0xFFECECEC),
             image: new DecorationImage(
-                image: new NetworkImage(itemData['authorImg']), fit: BoxFit.cover),
+                image: new NetworkImage(itemData['post_medium_image']), fit: BoxFit.cover),
             border: new Border.all(
               color: const Color(0xFFECECEC),
               width: 2.0,
@@ -169,7 +170,7 @@ class NewsListPageState extends State<NewsListPage> {
         new Padding(
           padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
           child: new Text(
-            itemData['timeStr'],
+            itemData['date'],
             style: subtitleStyle,
           ),
         ),
@@ -178,14 +179,14 @@ class NewsListPageState extends State<NewsListPage> {
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              new Text("${itemData['commCount']}", style: subtitleStyle),
+              new Text("${itemData['pageviews']}", style: subtitleStyle),
               new Image.asset('./images/ic_comment.png', width: 16.0, height: 16.0),
             ],
           ),
         )
       ],
     );
-    var thumbImgUrl = itemData['thumb'];
+    var thumbImgUrl = itemData['post_thumbnail_image'];
     var thumbImg = new Container();
     // var thumbImg = new Container(
     //   margin: const EdgeInsets.all(10.0),
@@ -206,10 +207,8 @@ class NewsListPageState extends State<NewsListPage> {
     if (thumbImgUrl != null && thumbImgUrl.length > 0) {
       thumbImg = new Container(
         margin: const EdgeInsets.all(10.0),
-        width: 60.0,
-        height: 60.0,
         decoration: new BoxDecoration(
-          shape: BoxShape.circle,
+          shape: BoxShape.rectangle,
           color: const Color(0xFFECECEC),
           image: new DecorationImage(
               image: new NetworkImage(thumbImgUrl), 
@@ -218,7 +217,7 @@ class NewsListPageState extends State<NewsListPage> {
           border: new Border.all(
             color: const Color(0xFFECECEC),
             width: 2.0,
-          ),
+          )
         ),
       );
     }
@@ -248,6 +247,9 @@ class NewsListPageState extends State<NewsListPage> {
             child: new Center(
               child: thumbImg,
             ),
+            decoration: new BoxDecoration(
+              borderRadius: new BorderRadius.circular(5)
+            )
           ),
         )
       ],
@@ -256,7 +258,7 @@ class NewsListPageState extends State<NewsListPage> {
       child: row,
       onTap: () {
         Navigator.of(context).push(new MaterialPageRoute(
-          builder: (ctx) => new NewsDetailPage(id: itemData['detailUrl'])
+          builder: (ctx) => new NewsDetailPage(id: itemData['link'])
         ));
       },
     );
