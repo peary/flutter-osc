@@ -14,7 +14,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="优阅文摘"
+        android:label="纸飞机"
         android:icon="@mipmap/paper_airplane">
         <activity
             android:name=".MainActivity"

@@ -72,8 +72,8 @@ class NewsListPageState extends State<NewsListPage> {
   // 从网络获取数据，isLoadMore表示是否是加载更多数据
   getNewsList(bool isLoadMore) {
     String url = Api.NEWS_LIST;
-    int page_size = 10;
-    url += "?page=$curPage&per_page=$page_size";
+    int pageSize = 10;
+    url += "?page=$curPage&per_page=$pageSize";
     print(url);
     NetUtils.get(url).then((data) {
       if (data != null) {
@@ -86,7 +86,7 @@ class NewsListPageState extends State<NewsListPage> {
           listTotalSize = 500;
           // data为数据内容，其中包含slide和news两部分，分别表示头部轮播图数据，和下面的列表数据
           var _slideData = result.sublist(0, 3);
-          var _listData = result.sublist(3, page_size);
+          var _listData = result.sublist(3, pageSize);
           setState(() {
             if (!isLoadMore) {
               // 不是加载更多，则直接为变量赋值
@@ -179,7 +179,7 @@ class NewsListPageState extends State<NewsListPage> {
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              new Text("${itemData['pageviews']}", style: subtitleStyle),
+              new Text("${itemData['total_comments']}", style: subtitleStyle),
               new Image.asset('./images/ic_comment.png', width: 16.0, height: 16.0),
             ],
           ),
@@ -214,10 +214,10 @@ class NewsListPageState extends State<NewsListPage> {
               image: new NetworkImage(thumbImgUrl), 
               fit: BoxFit.cover
           ),
-          border: new Border.all(
-            color: const Color(0xFFECECEC),
-            width: 2.0,
-          )
+          // border: new Border.all(
+          //   color: const Color(0xFFECECEC),
+          //   width: 2.0,
+          // )
         ),
       );
     }
@@ -241,8 +241,8 @@ class NewsListPageState extends State<NewsListPage> {
         new Padding(
           padding: const EdgeInsets.all(6.0),
           child: new Container(
-            width: 100.0,
-            height: 80.0,
+            width: 120.0,
+            height: 90.0,
             color: const Color(0xFFECECEC),
             child: new Center(
               child: thumbImg,
