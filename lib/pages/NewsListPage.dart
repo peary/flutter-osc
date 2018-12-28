@@ -4,9 +4,9 @@ import '../util/NetUtils.dart';
 import '../api/Api.dart';
 import 'dart:convert';
 import '../constants/Constants.dart';
-import '../widgets/SlideView.dart';
 import '../pages/NewsDetailPage.dart';
 import '../widgets/CommonEndLine.dart';
+import '../widgets/SlideView.dart';
 import '../widgets/SlideViewIndicator.dart';
 
 class NewsListPage extends StatefulWidget {
@@ -22,8 +22,9 @@ class NewsListPageState extends State<NewsListPage> {
   var listData;
   var slideData;
   var curPage = 1;
-  SlideView slideView;
   var listTotalSize = 0;
+
+  SlideView slideView;
   SlideViewIndicator indicator;
 
   @override
@@ -72,6 +73,7 @@ class NewsListPageState extends State<NewsListPage> {
   getNewsList(bool isLoadMore) {
     String url = Api.NEWS_LIST;
     url += "?pageIndex=$curPage&pageSize=10";
+    print(url);
     NetUtils.get(url).then((data) {
       if (data != null) {
         // 将接口返回的json字符串解析为map类型

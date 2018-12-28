@@ -147,7 +147,7 @@ class MyInfoPageState extends State<MyInfoPage> {
     if (i == 0) {
       var avatarContainer = new Container(
         color: themeColor,
-        height: 200.0,
+        height: 160.0,
         child: new Center(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,

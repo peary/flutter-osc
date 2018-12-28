@@ -36,18 +36,20 @@ class HotPageState extends State<HotPage> {
         Map<String, dynamic> map = json.decode(data);
         if (map['ok'] == 1) {
           // hotTopics.addAll(map['data']['cards'][0]['card_group']);
-
-          var items = map['data']['cards'][0]['card_group'];
-          for (var i=0; i<items.length; i++) {
-            var item = items[i];
-            TopicItem topic = new TopicItem();
-            topic.topic = item['desc'];
-            topic.gotoUrl = item['scheme'];
-            topic.hotDegree = item['desc_extr'];
-            topic.rank = (i + 1).toString();
-            hotTopics.add(topic);
+          var cards = map['data']['cards'];
+          if (cards != null && cards.length > 0) {
+            var items = cards[0]['card_group'];
+            for (var i=0; i<items.length; i++) {
+              var item = items[i];
+              TopicItem topic = new TopicItem();
+              topic.topic = item['desc'];
+              topic.gotoUrl = item['scheme'];
+              topic.hotDegree = item['desc_extr'];
+              topic.rank = (i + 1).toString();
+              hotTopics.add(topic);
+            }
+            print(hotTopics.length);
           }
-          print(hotTopics.length);
         }
       }
     });

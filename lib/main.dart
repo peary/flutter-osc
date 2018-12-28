@@ -7,7 +7,7 @@ import 'package:flutter_osc/util/ThemeUtils.dart';
 import 'pages/NewsListPage.dart';
 import 'pages/TweetsListPage.dart';
 import 'pages/DiscoveryPage.dart';
-import 'pages/HotPage.dart';
+// import 'pages/HotPage.dart';
 import 'pages/MyInfoPage.dart';
 import './widgets/MyDrawer.dart';
 
@@ -22,16 +22,24 @@ class MyOSCClient extends StatefulWidget {
 
 class MyOSCClientState extends State<MyOSCClient> {
   final appBarTitles = ['首页', '推荐', '热点', '我的'];
-  final tabTextStyleSelected = new TextStyle(color: const Color(0xff63ca6c));
-  final tabTextStyleNormal = new TextStyle(color: const Color(0xff969696));
+  final appBarIcons = [
+    Icon(Icons.home),
+    Icon(Icons.tune),
+    Icon(Icons.whatshot),
+    Icon(Icons.person)
+  ];
 
   Color themeColor = ThemeUtils.currentColorTheme;
 
+  final tabTextStyleSelected = new TextStyle(color: ThemeUtils.currentColorTheme);
+  final tabTextStyleNormal = new TextStyle(color: const Color(0xff969696));
+
   int _tabIndex = 0;
 
-  var tabImages;
   var _body;
   var pages;
+
+  PageController pageController;
 
   Image getTabImage(path) {
     return new Image.asset(path, width: 20.0, height: 20.0);
@@ -40,6 +48,8 @@ class MyOSCClientState extends State<MyOSCClient> {
   @override
   void initState() {
     super.initState();
+    pageController = new PageController(initialPage: this._tabIndex);
+
     DataUtils.getColorThemeIndex().then((index) {
       print('color theme index = $index');
       if (index != null) {
@@ -55,39 +65,20 @@ class MyOSCClientState extends State<MyOSCClient> {
     pages = <Widget>[
       new NewsListPage(),
       new TweetsListPage(),
-      new HotPage(),
+      new NewsListPage(),
       new MyInfoPage()
     ];
-    if (tabImages == null) {
-      tabImages = [
-        [
-          getTabImage('images/ic_nav_news_normal.png'),
-          getTabImage('images/ic_nav_news_actived.png')
-        ],
-        [
-          getTabImage('images/ic_nav_discover_normal.png'),
-          getTabImage('images/ic_nav_discover_actived.png')
-        ],
-        [
-          getTabImage('images/ic_nav_tweet_normal.png'),
-          getTabImage('images/ic_nav_tweet_actived.png')
-        ],
-        [
-          getTabImage('images/ic_nav_my_normal.png'),
-          getTabImage('images/ic_nav_my_pressed.png')
-        ]
-      ];
-    }
+    
     _body = new IndexedStack(
-      children: <Widget>[
-        new NewsListPage(),
-        new NewsListPage(),
-        // new TweetsListPage(),
-        new DiscoveryPage(),
-        new MyInfoPage()
-      ],
+      children: pages,
       index: _tabIndex,
     );
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 
   TextStyle getTabTextStyle(int curIndex) {
@@ -97,15 +88,13 @@ class MyOSCClientState extends State<MyOSCClient> {
     return tabTextStyleNormal;
   }
 
-  Image getTabIcon(int curIndex) {
-    if (curIndex == _tabIndex) {
-      return tabImages[curIndex][1];
-    }
-    return tabImages[curIndex][0];
+  Icon getTabIcon(int curIndex) {
+    return appBarIcons[curIndex];
   }
 
   Text getTabTitle(int curIndex) {
-    return new Text(appBarTitles[curIndex], style: getTabTextStyle(curIndex));
+    return new Text(appBarTitles[curIndex]);
+    // return new Text(appBarTitles[curIndex], style: getTabTextStyle(curIndex));
   }
 
   @override
@@ -116,38 +105,50 @@ class MyOSCClientState extends State<MyOSCClient> {
     );
     return new MaterialApp(
       theme: new ThemeData(
-          primaryColor: themeColor
+        primaryColor: themeColor
       ),
+      
       home: new Scaffold(
         appBar: new AppBar(
-          title: new Text(appBarTitles[_tabIndex],
-          style: new TextStyle(color: Colors.white)),
-          iconTheme: new IconThemeData(color: Colors.white)
+          title: new Text(appBarTitles[_tabIndex],),
+        ),
+        drawer: new Drawer(
+          child: new MyDrawer(
+            email: '492874653@qq.com',
+            name: '无忌0713',
+            profileimg: "images/profile_2.jpg",
+            background: "images/bg_2.jpg",
+          ) 
         ),
         body: _body,
-        bottomNavigationBar: new CupertinoTabBar(
+        bottomNavigationBar: new BottomNavigationBar(
           items: <BottomNavigationBarItem>[
             new BottomNavigationBarItem(
                 icon: getTabIcon(0),
-                title: getTabTitle(0)),
+                title: getTabTitle(0),
+                backgroundColor: ThemeUtils.defaultColor),
             new BottomNavigationBarItem(
                 icon: getTabIcon(1),
-                title: getTabTitle(1)),
+                title: getTabTitle(1),
+                backgroundColor: ThemeUtils.defaultColor),
             new BottomNavigationBarItem(
                 icon: getTabIcon(2),
-                title: getTabTitle(2)),
+                title: getTabTitle(2),
+                backgroundColor: ThemeUtils.defaultColor),
             new BottomNavigationBarItem(
                 icon: getTabIcon(3),
-                title: getTabTitle(3)),
+                title: getTabTitle(3),
+                backgroundColor: ThemeUtils.defaultColor)
           ],
           currentIndex: _tabIndex,
+          fixedColor: ThemeUtils.currentColorTheme,
+          type: BottomNavigationBarType.fixed,
           onTap: (index) {
             setState((){
               _tabIndex = index;
             });
           },
         ),
-        drawer: new MyDrawer()
       ),
     );
   }

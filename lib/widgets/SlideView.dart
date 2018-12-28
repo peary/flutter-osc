@@ -69,8 +69,12 @@ class SlideViewState extends State<SlideView> with SingleTickerProviderStateMixi
                 width: MediaQuery.of(context).size.width,
                 color: const Color(0x50000000),
                 child: new Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: new Text(title, style: new TextStyle(color: Colors.white, fontSize: 16.0,)),
+                  padding: const EdgeInsets.all(12.0),
+                  child: new Text(
+                    title, 
+                    style: new TextStyle(color: Colors.white, fontSize: 18.0,),
+                    textAlign: TextAlign.center,
+                  ),
                 )
               )
             ],
