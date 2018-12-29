@@ -22,7 +22,7 @@ class MyDrawer extends StatelessWidget {
                   image: new AssetImage(background), fit: BoxFit.cover)),
         ),
         new ListTile(
-          title: new Text("色彩"),
+          title: new Text("更换主题"),
           trailing: new Icon(
             Icons.color_lens,
           ),
@@ -45,7 +45,7 @@ class MyDrawer extends StatelessWidget {
           },
         ),
         new ListTile(
-          title: new Text("退出"),
+          title: new Text("退出登录"),
           trailing: new Icon(Icons.exit_to_app),
           onTap: () {
             print("Exit");
@@ -53,7 +53,7 @@ class MyDrawer extends StatelessWidget {
           },
         ),
         new ListTile(
-          title: new Text("关于"),
+          title: new Text("联系我们"),
           trailing: new Icon(Icons.question_answer),
           onTap: () {
             Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {

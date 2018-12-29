@@ -52,9 +52,9 @@ class SlideViewState extends State<SlideView> with SingleTickerProviderStateMixi
     if (slideData != null && slideData.length > 0) {
       for (var i = 0; i < slideData.length; i++) {
         var item = slideData[i];
-        var imgUrl = item['imgUrl'];
-        var title = item['title'];
-        var detailUrl = item['detailUrl'];
+        var imgUrl = item.thumbLink;
+        var title = item.title;
+        var detailUrl = item.hrefLink;
         items.add(new GestureDetector(
           onTap: () {
             // 点击跳转到详情
@@ -64,7 +64,7 @@ class SlideViewState extends State<SlideView> with SingleTickerProviderStateMixi
           },
           child: new Stack(
             children: <Widget>[
-              new Image.network(imgUrl, width: MediaQuery.of(context).size.width, fit: BoxFit.contain),
+              new Image.network(imgUrl, width: MediaQuery.of(context).size.width, fit: BoxFit.fitWidth),
               new Container(
                 width: MediaQuery.of(context).size.width,
                 color: const Color(0x50000000),

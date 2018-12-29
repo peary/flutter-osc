@@ -63,10 +63,15 @@ class MyOSCClientState extends State<MyOSCClient> {
       });
     });
     pages = <Widget>[
+      // new NewsListPage(),
+      // new TweetsListPage(),
+      // new NewsListPage(),
+      // new MyInfoPage(),
+
       new NewsListPage(),
-      new TweetsListPage(),
       new NewsListPage(),
-      new MyInfoPage()
+      new NewsListPage(),
+      new NewsListPage()
     ];
     
     _body = new IndexedStack(
@@ -116,7 +121,7 @@ class MyOSCClientState extends State<MyOSCClient> {
           child: new MyDrawer(
             email: '492874653@qq.com',
             name: '无忌0713',
-            profileimg: "images/profile_2.jpg",
+            profileimg: "images/profile_3.jpg",
             background: "images/bg_2.jpg",
           ) 
         ),

@@ -78,36 +78,38 @@ class NewsListPageState extends State<NewsListPage> {
     NetUtils.get(url).then((data) {
       if (data != null) {
         // 将接口返回的json字符串解析为map类型
-        List result = json.decode(data);
+        Iterable l = json.decode(data);
+        List<Post> result = l.map((m) => Post.fromJson(m)).toList();
         
         if (result.length > 0) {
           // code=0表示请求成功
           // total表示资讯总条数
           listTotalSize = 500;
           // data为数据内容，其中包含slide和news两部分，分别表示头部轮播图数据，和下面的列表数据
-          var _slideData = result.sublist(0, 3);
-          var _listData = result.sublist(3, pageSize);
+          
           setState(() {
             if (!isLoadMore) {
               // 不是加载更多，则直接为变量赋值
-              listData = _listData;
-              slideData = _slideData;
+              listData = result;
             } else {
               // 是加载更多，则需要将取到的news数据追加到原来的数据后面
               List newData = new List();
               // 添加原来的数据
               newData.addAll(listData);
               // 添加新取到的数据
-              newData.addAll(_listData);
+              newData.addAll(result);
               // 判断是否获取了所有的数据，如果是，则需要显示底部的"我也是有底线的"布局
               if (newData.length >= listTotalSize) {
                 newData.add(Constants.END_LINE_TAG);
               }
               // 给列表数据赋值
               listData = newData;
-              // 轮播图数据
-              slideData = _slideData;
             }
+            // 轮播图数据, 默认最新三条
+            slideData = listData.sublist(0, 3);
+            // 其他数据
+            listData = listData.sublist(3, );
+            // 初始化
             initSlider();
           });
         }
@@ -140,14 +142,15 @@ class NewsListPageState extends State<NewsListPage> {
       return new Divider(height: 1.0);
     }
     i = i ~/ 2;
-    var itemData = listData[i];
+
+    Post itemData = listData[i];
     if (itemData is String && itemData == Constants.END_LINE_TAG) {
       return new CommonEndLine();
     }
     var titleRow = new Row(
       children: <Widget>[
         new Expanded(
-          child: new Text(itemData['title']['rendered'], style: titleTextStyle),
+          child: new Text(itemData.title, style: titleTextStyle),
         )
       ],
     );
@@ -160,17 +163,20 @@ class NewsListPageState extends State<NewsListPage> {
             shape: BoxShape.circle,
             color: const Color(0xFFECECEC),
             image: new DecorationImage(
-                image: new NetworkImage(itemData['post_medium_image']), fit: BoxFit.cover),
+                image: new NetworkImage(itemData.thumbLink), 
+                fit: BoxFit.cover
+            ),
             border: new Border.all(
               color: const Color(0xFFECECEC),
               width: 2.0,
             ),
+            // borderRadius: new BorderRadius.all(Radius.circular(6)),
           ),
         ),
         new Padding(
           padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
           child: new Text(
-            itemData['date'],
+            itemData.postDate,
             style: subtitleStyle,
           ),
         ),
@@ -179,14 +185,14 @@ class NewsListPageState extends State<NewsListPage> {
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              new Text("${itemData['total_comments']}", style: subtitleStyle),
+              new Text(itemData.comments, style: subtitleStyle),
               new Image.asset('./images/ic_comment.png', width: 16.0, height: 16.0),
             ],
           ),
         )
       ],
     );
-    var thumbImgUrl = itemData['post_thumbnail_image'];
+    var thumbImgUrl = itemData.thumbLink;
     var thumbImg = new Container();
     // var thumbImg = new Container(
     //   margin: const EdgeInsets.all(10.0),
@@ -243,12 +249,11 @@ class NewsListPageState extends State<NewsListPage> {
           child: new Container(
             width: 120.0,
             height: 90.0,
-            color: const Color(0xFFECECEC),
             child: new Center(
               child: thumbImg,
             ),
             decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.circular(5)
+              borderRadius: new BorderRadius.all(Radius.circular(6)),
             )
           ),
         )
@@ -258,9 +263,33 @@ class NewsListPageState extends State<NewsListPage> {
       child: row,
       onTap: () {
         Navigator.of(context).push(new MaterialPageRoute(
-          builder: (ctx) => new NewsDetailPage(id: itemData['link'])
+          builder: (ctx) => new NewsDetailPage(id: itemData.hrefLink)
         ));
       },
     );
   }
+}
+
+
+class Post {
+    final int id;
+    final String title;
+    final String thumbLink;
+    final String hrefLink;
+    final String comments;
+    final String postDate;
+
+    Post({this.id, this.title, this.thumbLink, this.hrefLink, this.comments, this.postDate, });
+
+   factory Post.fromJson(Map<String, dynamic> json) {
+    print(json.toString()); 
+    return new Post(
+      id: json['id'],
+      title: json['title']['rendered'].toString(),
+      thumbLink: json['post_medium_image'],
+      hrefLink: json['link'],
+      comments: json['total_comments'].toString(),
+      postDate: json['date'],
+    );
+   }
 }

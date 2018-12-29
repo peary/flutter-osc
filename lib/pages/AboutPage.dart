@@ -124,20 +124,12 @@ class AboutPageState extends State<AboutPage> {
               height: 100.0,
               color: Colors.transparent,
             ),
-            new Image.asset(
-              './images/ic_osc_logo.png',
-              width: 200.0,
-              height: 56.0,
-            ),
-            new Text("基于Google Flutter的开源中国客户端"),
-            authorLink,
-            mayunLink,
-            githubLink,
+            new Text("享受阅读，相信个体的力量！", style: new TextStyle(fontSize: 18),),
             new Expanded(flex: 1, child: getImageOrBtn()),
             new Container(
-                margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 15.0),
+                margin: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
                 child: new Text(
-                  "本项目仅供学习使用，与开源中国官方无关",
+                  "本项目基于Google Flutter 1.0开发",
                   style: new TextStyle(fontSize: 12.0),
                 ))
           ],
