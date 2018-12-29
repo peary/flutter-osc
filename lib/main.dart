@@ -10,6 +10,7 @@ import 'pages/DiscoveryPage.dart';
 // import 'pages/HotPage.dart';
 import 'pages/MyInfoPage.dart';
 import './widgets/MyDrawer.dart';
+import 'pages/AboutPage.dart';
 
 void main() {
   runApp(new MyOSCClient());
@@ -39,8 +40,6 @@ class MyOSCClientState extends State<MyOSCClient> {
   var _body;
   var pages;
 
-  PageController pageController;
-
   Image getTabImage(path) {
     return new Image.asset(path, width: 20.0, height: 20.0);
   }
@@ -48,7 +47,6 @@ class MyOSCClientState extends State<MyOSCClient> {
   @override
   void initState() {
     super.initState();
-    pageController = new PageController(initialPage: this._tabIndex);
 
     DataUtils.getColorThemeIndex().then((index) {
       print('color theme index = $index');
@@ -63,15 +61,15 @@ class MyOSCClientState extends State<MyOSCClient> {
       });
     });
     pages = <Widget>[
-      // new NewsListPage(),
-      // new TweetsListPage(),
-      // new NewsListPage(),
-      // new MyInfoPage(),
+      new NewsListPage(),
+      new TweetsListPage(),
+      new DiscoveryPage(),
+      new MyInfoPage(),
 
-      new NewsListPage(),
-      new NewsListPage(),
-      new NewsListPage(),
-      new NewsListPage()
+      // new NewsListPage(),
+      // new AboutPage(),
+      // new AboutPage(),
+      // new AboutPage()
     ];
     
     _body = new IndexedStack(
@@ -82,7 +80,6 @@ class MyOSCClientState extends State<MyOSCClient> {
 
   @override
   void dispose() {
-    pageController.dispose();
     super.dispose();
   }
 

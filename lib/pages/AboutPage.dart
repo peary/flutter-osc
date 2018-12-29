@@ -113,7 +113,7 @@ class AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("关于", style: new TextStyle(color: Colors.white)),
+        title: new Text("关于", style: new TextStyle(color: Colors.white,)),
         iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: new Center(
@@ -125,7 +125,6 @@ class AboutPageState extends State<AboutPage> {
               color: Colors.transparent,
             ),
             new Text("享受阅读，相信个体的力量！", style: new TextStyle(fontSize: 18),),
-            new Expanded(flex: 1, child: getImageOrBtn()),
             new Container(
                 margin: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
                 child: new Text(

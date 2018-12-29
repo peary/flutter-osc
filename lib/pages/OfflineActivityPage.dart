@@ -18,7 +18,7 @@ class OfflineActivityPageState extends State<OfflineActivityPage> {
   String eventTypeRec = "recommend";
   int curPage = 1;
 
-  TextStyle titleTextStyle = new TextStyle(color: Colors.black, fontSize: 18.0);
+  TextStyle titleTextStyle = new TextStyle(color: Colors.black, );
 
   List recData, latestData, ychData;
 

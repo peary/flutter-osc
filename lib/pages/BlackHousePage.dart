@@ -238,7 +238,7 @@ class BlackHousePageState extends State<BlackHousePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("动弹小黑屋", style: new TextStyle(color: Colors.white)),
+        title: new Text("动弹小黑屋", style: new TextStyle(color: Colors.white, )),
         iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: new Padding(

@@ -1,13 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../util/NetUtils.dart';
 import '../api/Api.dart';
-import 'dart:convert';
 import '../constants/Constants.dart';
 import '../pages/NewsDetailPage.dart';
 import '../widgets/CommonEndLine.dart';
 import '../widgets/SlideView.dart';
 import '../widgets/SlideViewIndicator.dart';
+
 
 class NewsListPage extends StatefulWidget {
   @override
@@ -16,8 +17,8 @@ class NewsListPage extends StatefulWidget {
 
 class NewsListPageState extends State<NewsListPage> {
   final ScrollController _controller = new ScrollController();
-  final TextStyle titleTextStyle = new TextStyle(fontSize: 15.0);
-  final TextStyle subtitleStyle = new TextStyle(color: const Color(0xFFB5BDC0), fontSize: 12.0);
+  final TextStyle titleTextStyle = new TextStyle(fontSize: 16.0);
+  final TextStyle subtitleStyle = new TextStyle(color: const Color(0xFFB5BDC0), fontSize: 13.0);
 
   var listData;
   var slideData;
@@ -90,7 +91,9 @@ class NewsListPageState extends State<NewsListPage> {
           setState(() {
             if (!isLoadMore) {
               // 不是加载更多，则直接为变量赋值
-              listData = result;
+              slideData = result.sublist(0, 3);
+              // 其他数据
+              listData = result.sublist(3, );
             } else {
               // 是加载更多，则需要将取到的news数据追加到原来的数据后面
               List newData = new List();
@@ -105,10 +108,12 @@ class NewsListPageState extends State<NewsListPage> {
               // 给列表数据赋值
               listData = newData;
             }
-            // 轮播图数据, 默认最新三条
-            slideData = listData.sublist(0, 3);
-            // 其他数据
-            listData = listData.sublist(3, );
+            if (slideData == null) {
+              // 轮播图数据, 默认最新三条
+              slideData = listData.sublist(0, 3);
+              // 其他数据
+              listData = listData.sublist(3, );
+            }
             // 初始化
             initSlider();
           });
@@ -170,7 +175,6 @@ class NewsListPageState extends State<NewsListPage> {
               color: const Color(0xFFECECEC),
               width: 2.0,
             ),
-            // borderRadius: new BorderRadius.all(Radius.circular(6)),
           ),
         ),
         new Padding(
@@ -218,8 +222,9 @@ class NewsListPageState extends State<NewsListPage> {
           color: const Color(0xFFECECEC),
           image: new DecorationImage(
               image: new NetworkImage(thumbImgUrl), 
-              fit: BoxFit.cover
+              fit: BoxFit.cover,
           ),
+          borderRadius: new BorderRadius.all(Radius.circular(6)),
           // border: new Border.all(
           //   color: const Color(0xFFECECEC),
           //   width: 2.0,
@@ -237,7 +242,7 @@ class NewsListPageState extends State<NewsListPage> {
               children: <Widget>[
                 titleRow,
                 new Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(4.0, 8.0, 0.0, 0.0),
                   child: timeRow,
                 )
               ],
@@ -245,16 +250,16 @@ class NewsListPageState extends State<NewsListPage> {
           ),
         ),
         new Padding(
-          padding: const EdgeInsets.all(6.0),
+          padding: const EdgeInsets.all(4.0),
           child: new Container(
             width: 120.0,
             height: 90.0,
             child: new Center(
               child: thumbImg,
             ),
-            decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.all(Radius.circular(6)),
-            )
+            // decoration: new BoxDecoration(
+            //   borderRadius: new BorderRadius.all(Radius.circular(6)),
+            // )
           ),
         )
       ],
@@ -263,7 +268,7 @@ class NewsListPageState extends State<NewsListPage> {
       child: row,
       onTap: () {
         Navigator.of(context).push(new MaterialPageRoute(
-          builder: (ctx) => new NewsDetailPage(id: itemData.hrefLink)
+          builder: (ctx) => new NewsDetailPage(url: itemData.hrefLink, title: itemData.title,)
         ));
       },
     );
@@ -275,18 +280,20 @@ class Post {
     final int id;
     final String title;
     final String thumbLink;
+    final String imageLink;
     final String hrefLink;
     final String comments;
     final String postDate;
 
-    Post({this.id, this.title, this.thumbLink, this.hrefLink, this.comments, this.postDate, });
+    Post({this.id, this.title, this.thumbLink, this.imageLink, this.hrefLink, this.comments, this.postDate, });
 
    factory Post.fromJson(Map<String, dynamic> json) {
     print(json.toString()); 
     return new Post(
       id: json['id'],
       title: json['title']['rendered'].toString(),
-      thumbLink: json['post_medium_image'],
+      thumbLink: json['post_thumbnail_image'],
+      imageLink: json['post_large_image'],
       hrefLink: json['link'],
       comments: json['total_comments'].toString(),
       postDate: json['date'],

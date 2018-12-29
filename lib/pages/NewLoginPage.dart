@@ -194,7 +194,7 @@ class NewLoginPageState extends State<NewLoginPage> {
     }
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("登录", style: new TextStyle(color: Colors.white)),
+        title: new Text("登录", style: new TextStyle(color: Colors.white,)),
         iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: new Container(
