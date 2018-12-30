@@ -22,7 +22,7 @@ class MyInfoPage extends StatefulWidget {
 }
 
 class MyInfoPageState extends State<MyInfoPage> {
-  Color themeColor = ThemeUtils.currentColorTheme;
+  Color themeColor = ThemeUtils.currentColor;
 
   static const double IMAGE_ICON_WIDTH = 30.0;
   static const double ARROW_ICON_WIDTH = 16.0;
@@ -167,14 +167,13 @@ class MyInfoPageState extends State<MyInfoPage> {
                             image: new NetworkImage(userAvatar),
                             fit: BoxFit.cover),
                         border: new Border.all(
-                          color: Colors.white,
                           width: 2.0,
                         ),
                       ),
                     ),
               new Text(
                 userName == null ? "点击头像登录" : userName,
-                style: new TextStyle(color: Colors.white, fontSize: 16.0),
+                style: new TextStyle(fontSize: 16.0),
               ),
             ],
           ),

@@ -110,8 +110,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("设置", style: new TextStyle(color: Colors.white,)),
-        iconTheme: new IconThemeData(color: Colors.white),
+        title: new Text("设置"),
       ),
       body: new ListView.builder(
         itemBuilder: (ctx, i) => _renderRow(ctx, i),

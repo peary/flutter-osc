@@ -7,15 +7,17 @@ class ThemeUtils {
   
   // static const Color defaultColor = const Colors.white10
 
-  static const defaultColor = Colors.teal;
+  static const defaultColor = Color(0xFFEEEEEE);
 
   // 可选的主题色
   static const List<Color> supportColors = [
+    defaultColor,
     Colors.black,
     Colors.purple, 
-    Colors.orange, 
+    Colors.orange,
+    Colors.deepOrange, 
     Colors.deepPurpleAccent, 
-    Colors.redAccent, 
+    Colors.red, 
     Colors.blue, 
     Colors.amber, 
     Colors.green, 
@@ -23,8 +25,10 @@ class ThemeUtils {
     Colors.indigo, 
     Colors.cyan, 
     Colors.teal,
+    Colors.pink,
+    Colors.grey
   ];
 
   // 当前的主题色
-  static Color currentColorTheme = defaultColor;
+  static Color currentColor = defaultColor;
 }

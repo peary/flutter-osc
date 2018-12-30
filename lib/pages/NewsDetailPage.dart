@@ -41,7 +41,7 @@ class NewsDetailPageState extends State<NewsDetailPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> titleContent = [];
-    titleContent.add(new Text(" " + title.substring(0,10) + "...", style: new TextStyle(color: Colors.white),));
+    titleContent.add(new Text(title, textAlign: TextAlign.left,));
     if (!loaded) {
       titleContent.add(new CupertinoActivityIndicator());
     }
@@ -53,7 +53,7 @@ class NewsDetailPageState extends State<NewsDetailPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: titleContent,
         ),
-        iconTheme: new IconThemeData(color: Colors.white),
+        // iconTheme: new IconThemeData(color: Colors.white),
       ),
       withZoom: false,
       withLocalStorage: true,

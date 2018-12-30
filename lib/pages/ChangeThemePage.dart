@@ -21,8 +21,7 @@ class ChangeThemePageState extends State<ChangeThemePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('切换主题', style: new TextStyle(color: Colors.white,)),
-        iconTheme: new IconThemeData(color: Colors.white),
+        title: new Text('切换主题'),
       ),
       body: new Padding(
         padding: const EdgeInsets.all(4.0),
@@ -31,7 +30,7 @@ class ChangeThemePageState extends State<ChangeThemePage> {
           children: new List.generate(colors.length, (index) {
             return new InkWell(
               onTap: () {
-                ThemeUtils.currentColorTheme = colors[index];
+                ThemeUtils.currentColor = colors[index];
                 DataUtils.setColorTheme(index);
                 changeColorTheme(colors[index]);
               },

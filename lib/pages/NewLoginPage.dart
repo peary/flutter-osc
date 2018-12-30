@@ -194,8 +194,7 @@ class NewLoginPageState extends State<NewLoginPage> {
     }
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("登录", style: new TextStyle(color: Colors.white,)),
-        iconTheme: new IconThemeData(color: Colors.white),
+        title: new Text("登录"),
       ),
       body: new Container(
         padding: const EdgeInsets.all(10.0),
@@ -269,7 +268,7 @@ class NewLoginPageState extends State<NewLoginPage> {
                     child: new InkWell(
                       child: new Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: new Text("使用WebView登录方式", style: new TextStyle(fontSize: 13.0, color: ThemeUtils.currentColorTheme))
+                          child: new Text("使用WebView登录方式", style: new TextStyle(fontSize: 13.0, color: ThemeUtils.currentColor))
                       ),
                       onTap: () {
                         Navigator.pop(context);

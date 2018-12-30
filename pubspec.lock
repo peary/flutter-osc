@@ -55,6 +55,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_qq_bridge:
+    dependency: "direct main"
+    description:
+      name: flutter_qq_bridge
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -67,13 +74,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.3.0+2"
-  html_unescape:
-    dependency: "direct main"
-    description:
-      name: html_unescape
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.1+2"
   http:
     dependency: "direct main"
     description:

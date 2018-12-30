@@ -13,7 +13,7 @@ class CommonButton extends StatefulWidget {
 
 class CommonButtonState extends State<CommonButton> {
 
-  Color color = ThemeUtils.currentColorTheme;
+  Color color = ThemeUtils.currentColor;
   TextStyle textStyle = new TextStyle(color: Colors.white, fontSize: 17);
 
   @override

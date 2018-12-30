@@ -91,7 +91,6 @@ class LoginPageState extends State<LoginPage> {
     List<Widget> titleContent = [];
     titleContent.add(new Text(
       "登录开源中国",
-      style: new TextStyle(color: Colors.white),
     ));
     if (loading) {
       // 如果还在加载中，就在标题栏上显示一个圆形进度条

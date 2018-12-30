@@ -216,7 +216,7 @@ class NewsListPageState extends State<NewsListPage> {
     // );
     if (thumbImgUrl != null && thumbImgUrl.length > 0) {
       thumbImg = new Container(
-        margin: const EdgeInsets.all(10.0),
+        margin: const EdgeInsets.all(6.0),
         decoration: new BoxDecoration(
           shape: BoxShape.rectangle,
           color: const Color(0xFFECECEC),
@@ -237,12 +237,12 @@ class NewsListPageState extends State<NewsListPage> {
         new Expanded(
           flex: 1,
           child: new Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(6.0),
             child: new Column(
               children: <Widget>[
                 titleRow,
                 new Padding(
-                  padding: const EdgeInsets.fromLTRB(4.0, 8.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(0, 8.0, 0.0, 0.0),
                   child: timeRow,
                 )
               ],

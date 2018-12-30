@@ -30,10 +30,10 @@ class MyOSCClientState extends State<MyOSCClient> {
     Icon(Icons.person)
   ];
 
-  Color themeColor = ThemeUtils.currentColorTheme;
+  Color themeColor = ThemeUtils.currentColor;
 
-  final tabTextStyleSelected = new TextStyle(color: ThemeUtils.currentColorTheme);
-  final tabTextStyleNormal = new TextStyle(color: const Color(0xff969696));
+  final tabTextStyleSelected = new TextStyle(color: Colors.black);
+  final tabTextStyleNormal = new TextStyle(color: Color(0xff969696));
 
   int _tabIndex = 0;
 
@@ -51,7 +51,7 @@ class MyOSCClientState extends State<MyOSCClient> {
     DataUtils.getColorThemeIndex().then((index) {
       print('color theme index = $index');
       if (index != null) {
-        ThemeUtils.currentColorTheme = ThemeUtils.supportColors[index];
+        ThemeUtils.currentColor = ThemeUtils.supportColors[index];
         Constants.eventBus.fire(new ChangeThemeEvent(ThemeUtils.supportColors[index]));
       }
     });
@@ -116,8 +116,8 @@ class MyOSCClientState extends State<MyOSCClient> {
         ),
         drawer: new Drawer(
           child: new MyDrawer(
-            email: '492874653@qq.com',
             name: '无忌0713',
+            email: '492874653@qq.com',
             profileimg: "images/profile_3.jpg",
             background: "images/bg_2.jpg",
           ) 
@@ -143,7 +143,7 @@ class MyOSCClientState extends State<MyOSCClient> {
                 backgroundColor: ThemeUtils.defaultColor)
           ],
           currentIndex: _tabIndex,
-          fixedColor: ThemeUtils.currentColorTheme,
+          fixedColor: ThemeUtils.currentColor,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {
             setState((){

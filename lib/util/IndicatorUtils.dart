@@ -10,15 +10,15 @@ class IndicatorFactory {
       completeText: '刷新完成!',
       releaseText: '释放可以刷新',
       idleText: '下拉刷新哦!',
-      failedIcon: new Icon(Icons.clear, color: ThemeUtils.currentColorTheme),
+      failedIcon: new Icon(Icons.clear, color: ThemeUtils.currentColor),
       completeIcon:
-          new Icon(Icons.forward_30, color: ThemeUtils.currentColorTheme),
+          new Icon(Icons.forward_30, color: ThemeUtils.currentColor),
       idleIcon:
-          new Icon(Icons.arrow_downward, color: ThemeUtils.currentColorTheme),
+          new Icon(Icons.arrow_downward, color: ThemeUtils.currentColor),
       releaseIcon:
-          new Icon(Icons.arrow_upward, color: ThemeUtils.currentColorTheme),
+          new Icon(Icons.arrow_upward, color: ThemeUtils.currentColor),
       refreshingText: '正在刷新...',
-      textStyle: new TextStyle(inherit: true, color: ThemeUtils.currentColorTheme),
+      textStyle: new TextStyle(inherit: true, color: ThemeUtils.currentColor),
       mode: mode,
       refreshingIcon: const CircularProgressIndicator(
         strokeWidth: 3.0,
@@ -34,11 +34,11 @@ class IndicatorFactory {
         child: new ClassicIndicator(
           mode: mode,
           idleIcon:
-              new Icon(Icons.arrow_upward, color: ThemeUtils.currentColorTheme),
+              new Icon(Icons.arrow_upward, color: ThemeUtils.currentColor),
           textStyle:
-              new TextStyle(inherit: true, color: ThemeUtils.currentColorTheme),
+              new TextStyle(inherit: true, color: ThemeUtils.currentColor),
           releaseIcon:
-              new Icon(Icons.arrow_upward, color: ThemeUtils.currentColorTheme),
+              new Icon(Icons.arrow_upward, color: ThemeUtils.currentColor),
           refreshingText: '火热加载中...',
           idleText: '上拉加载',
           failedText: '网络异常',
@@ -55,11 +55,11 @@ class IndicatorFactory {
       return new ClassicIndicator(
           mode: mode,
           idleIcon:
-              new Icon(Icons.arrow_upward, color: ThemeUtils.currentColorTheme),
+              new Icon(Icons.arrow_upward, color: ThemeUtils.currentColor),
           textStyle:
-              new TextStyle(inherit: true, color: ThemeUtils.currentColorTheme),
+              new TextStyle(inherit: true, color: ThemeUtils.currentColor),
           releaseIcon:
-              new Icon(Icons.arrow_upward, color: ThemeUtils.currentColorTheme),
+              new Icon(Icons.arrow_upward, color: ThemeUtils.currentColor),
           refreshingText: '火热加载中...',
           idleText: '上拉加载',
           failedText: '网络异常',
