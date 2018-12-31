@@ -178,7 +178,7 @@ class NewsListPageState extends State<NewsListPage> {
           ),
         ),
         new Padding(
-          padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+          padding: const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0),
           child: new Text(
             itemData.postDate,
             style: subtitleStyle,
@@ -224,7 +224,7 @@ class NewsListPageState extends State<NewsListPage> {
               image: new NetworkImage(thumbImgUrl), 
               fit: BoxFit.cover,
           ),
-          borderRadius: new BorderRadius.all(Radius.circular(6)),
+          borderRadius: new BorderRadius.all(Radius.circular(8)),
           // border: new Border.all(
           //   color: const Color(0xFFECECEC),
           //   width: 2.0,
@@ -257,15 +257,13 @@ class NewsListPageState extends State<NewsListPage> {
             child: new Center(
               child: thumbImg,
             ),
-            // decoration: new BoxDecoration(
-            //   borderRadius: new BorderRadius.all(Radius.circular(6)),
-            // )
           ),
         )
       ],
     );
     return new InkWell(
       child: row,
+      borderRadius: new BorderRadius.all(Radius.circular(8)),
       onTap: () {
         Navigator.of(context).push(new MaterialPageRoute(
           builder: (ctx) => new NewsDetailPage(url: itemData.hrefLink, title: itemData.title,)

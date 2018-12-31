@@ -61,7 +61,6 @@ class CommonWebPageState extends State<CommonWebPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: titleContent,
         ),
-        iconTheme: new IconThemeData(color: Colors.white),
       ),
       withZoom: true,
       withLocalStorage: true,

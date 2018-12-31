@@ -86,28 +86,6 @@ class AboutPageState extends State<AboutPage> {
     };
   }
 
-  Widget getImageOrBtn() {
-    if (!showImage) {
-      return new Container(
-        child: new Center(
-          child: new InkWell(
-            child: new Container(
-              padding: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
-              child: new Text("谢谢"),
-              decoration: new BoxDecoration(
-                  border: new Border.all(color: Colors.black),
-                  borderRadius: new BorderRadius.all(new Radius.circular(5.0))),
-            ),
-            onTap: () {
-              setState(() {
-                showImage = true;
-              });
-            },
-          ),
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -53,7 +53,6 @@ class NewsDetailPageState extends State<NewsDetailPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: titleContent,
         ),
-        // iconTheme: new IconThemeData(color: Colors.white),
       ),
       withZoom: false,
       withLocalStorage: true,

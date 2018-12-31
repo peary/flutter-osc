@@ -106,7 +106,6 @@ class LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: titleContent,
         ),
-        iconTheme: new IconThemeData(color: Colors.white),
       ),
       withZoom: true,  // 允许网页缩放
       withLocalStorage: true, // 允许LocalStorage

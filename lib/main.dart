@@ -10,7 +10,6 @@ import 'pages/DiscoveryPage.dart';
 // import 'pages/HotPage.dart';
 import 'pages/MyInfoPage.dart';
 import './widgets/MyDrawer.dart';
-import 'pages/AboutPage.dart';
 
 void main() {
   runApp(new MyOSCClient());

@@ -5,9 +5,9 @@ class ThemeUtils {
   // static const Color defaultColor = const Color();
   // static const Color defaultColor = const Color(0xFF63FDD9);
   
-  // static const Color defaultColor = const Colors.white10
+  // static const Color defaultColor = Colors.white10
 
-  static const defaultColor = Color(0xFFEEEEEE);
+  static const defaultColor = Color(0xFFE0E0E0);
 
   // 可选的主题色
   static const List<Color> supportColors = [

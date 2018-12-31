@@ -4,7 +4,7 @@ import 'dart:async';
 // 黑名单工具类，用于在本地操作黑名单
 class BlackListUtils {
 
-  static final String SP_BLACK_LIST = "blackList";
+  static const String SP_BLACK_LIST = "blackList";
 
   // 将对象数组转化为整型数组
   static List<int> convert(List objList) {
