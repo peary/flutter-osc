@@ -6,32 +6,20 @@ import '../api/Api.dart';
 import '../constants/Constants.dart';
 import '../pages/NewsDetailPage.dart';
 import '../widgets/CommonEndLine.dart';
-import '../widgets/SlideView.dart';
-import '../widgets/SlideViewIndicator.dart';
 
-
-class NewsListPage extends StatefulWidget {
-  var tagName;
-
-  NewsListPage({this.tagName});
-
+class NewsListWidget extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new NewsListPageState();
+  State<StatefulWidget> createState() => new NewsListWidgetState();
 }
 
-class NewsListPageState extends State<NewsListPage> {
+class NewsListWidgetState extends State<NewsListWidget> {
   final ScrollController _controller = new ScrollController();
   final TextStyle titleTextStyle = new TextStyle(fontSize: 16.0);
   final TextStyle subtitleStyle = new TextStyle(color: const Color(0xFFB5BDC0), fontSize: 13.0);
 
-  var tagName;
   var listData;
-  var slideData;
   var curPage = 1;
   var listTotalSize = 0;
-
-  SlideView slideView;
-  SlideViewIndicator indicator;
 
   @override
   void initState() {
@@ -94,11 +82,8 @@ class NewsListPageState extends State<NewsListPage> {
           // data为数据内容，其中包含slide和news两部分，分别表示头部轮播图数据，和下面的列表数据
           
           setState(() {
-            if (!isLoadMore) {
-              // 不是加载更多，则直接为变量赋值
-              slideData = result.sublist(0, 3);
-              // 其他数据
-              listData = result.sublist(3, );
+            if (!isLoadMore) {              // 其他数据
+              listData = result;
             } else {
               // 是加载更多，则需要将取到的news数据追加到原来的数据后面
               List newData = new List();
@@ -113,41 +98,13 @@ class NewsListPageState extends State<NewsListPage> {
               // 给列表数据赋值
               listData = newData;
             }
-            if (slideData == null) {
-              // 轮播图数据, 默认最新三条
-              slideData = listData.sublist(0, 3);
-              // 其他数据
-              listData = listData.sublist(3, );
-            }
-            // 初始化
-            initSlider();
           });
         }
       }
     });
   }
 
-  void initSlider() {
-    indicator = new SlideViewIndicator(slideData.length);
-    slideView = new SlideView(slideData, indicator);
-  }
-
   Widget renderRow(i) {
-    if (i == 0) {
-      return new Container(
-        height: 180.0,
-        child: new Stack(
-          children: <Widget>[
-            slideView,
-            new Container(
-              alignment: Alignment.bottomCenter,
-              child: indicator,
-            )
-          ],
-        ),
-      );
-    }
-    i -= 1;
     if (i.isOdd) {
       return new Divider(height: 1.0);
     }
@@ -202,23 +159,8 @@ class NewsListPageState extends State<NewsListPage> {
       ],
     );
     var thumbImgUrl = itemData.thumbLink;
+
     var thumbImg;
-    // var thumbImg = new Container(
-    //   margin: const EdgeInsets.all(10.0),
-    //   width: 60.0,
-    //   height: 60.0,
-    //   decoration: new BoxDecoration(
-    //     shape: BoxShape.circle,
-    //     color: const Color(0xFFECECEC),
-    //     image: new DecorationImage(
-    //         image: new ExactAssetImage('./images/ic_img_default.jpg'),
-    //         fit: BoxFit.cover),
-    //     border: new Border.all(
-    //       color: const Color(0xFFECECEC),
-    //       width: 2.0,
-    //     ),
-    //   ),
-    // );
     if (thumbImgUrl != null && thumbImgUrl.length > 0) {
       thumbImg = new Container(
         margin: const EdgeInsets.all(6.0),
@@ -238,7 +180,7 @@ class NewsListPageState extends State<NewsListPage> {
       );
     }
     var row;
-    if (thumbImg == null) {
+    if(thumbImg == null) {
       row = new Row(
         children: <Widget>[
           new Expanded(
@@ -255,7 +197,7 @@ class NewsListPageState extends State<NewsListPage> {
                 ],
               ),
             ),
-          ),
+          )
         ],
       );
     } else {
