@@ -51,6 +51,9 @@ class SlideViewState extends State<SlideView> with SingleTickerProviderStateMixi
     List<Widget> items = [];
     if (slideData != null && slideData.length > 0) {
       for (var i = 0; i < slideData.length; i++) {
+        if (i >= 3) {
+          break;
+        }
         var item = slideData[i];
         var imgUrl = item.imageLink;
         var title = item.title;

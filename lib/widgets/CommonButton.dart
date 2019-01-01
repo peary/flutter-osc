@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_osc/util/ThemeUtils.dart';
+import '../util/ThemeUtils.dart';
 
 class CommonButton extends StatefulWidget {
   final String text;

@@ -165,12 +165,18 @@ class DiscoveryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
-      child: new ListView.builder(
-        itemCount: listData.length,
-        itemBuilder: (context, i) => renderRow(context, i),
+    return new Scaffold(
+      appBar: new AppBar(
+        title: const Text('热点'),
+        elevation: 0.0,
       ),
+      body: new Padding(
+        padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+        child: new ListView.builder(
+          itemCount: listData.length,
+          itemBuilder: (context, i) => renderRow(context, i),
+        ),
+      )
     );
   }
 

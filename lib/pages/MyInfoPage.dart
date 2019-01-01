@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_osc/constants/Constants.dart';
-import 'package:flutter_osc/events/ChangeThemeEvent.dart';
-import 'package:flutter_osc/events/LoginEvent.dart';
-import 'package:flutter_osc/events/LogoutEvent.dart';
-import 'package:flutter_osc/util/ThemeUtils.dart';
+import '../constants/Constants.dart';
+import '../events/ChangeThemeEvent.dart';
+import '../events/LoginEvent.dart';
+import '../events/LogoutEvent.dart';
+import '../util/ThemeUtils.dart';
 import '../pages/CommonWebPage.dart';
 import '../pages/LoginPage.dart';
 import '../pages/NewLoginPage.dart';
@@ -104,7 +104,13 @@ class MyInfoPageState extends State<MyInfoPage> {
       itemCount: titles.length * 2,
       itemBuilder: (context, i) => renderRow(i),
     );
-    return listView;
+    return new Scaffold(
+      appBar: new AppBar(
+        title: const Text('我的'),
+        elevation: 0.0,
+      ),
+      body: listView
+    );
   }
 
   // 获取用户信息

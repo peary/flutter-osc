@@ -3,7 +3,7 @@ class Api {
 
   // 资讯列表
   // static const String NEWS_LIST = "http://osc.yubo725.top/news/list";
-  static const String NEWS_LIST = "https://blockshare.top/wp-json/wp/v2/posts";
+  static const String NEWS_LIST = "https://blockshare.top/wp-json/wp/v2/posts?per_page=10";
 
   // 资讯详情
   static const String NEWS_DETAIL = HOST + "/action/openapi/news_detail";

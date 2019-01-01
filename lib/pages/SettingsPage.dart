@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_osc/constants/Constants.dart';
-import 'package:flutter_osc/events/LogoutEvent.dart';
-import 'package:flutter_osc/pages/ChangeThemePage.dart';
+import '../constants/Constants.dart';
+import '../events/LogoutEvent.dart';
+import '../pages/ChangeThemePage.dart';
 import '../util/DataUtils.dart';
 
 class SettingsPage extends StatelessWidget {

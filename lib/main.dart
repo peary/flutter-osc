@@ -1,27 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_osc/constants/Constants.dart';
-import 'package:flutter_osc/events/ChangeThemeEvent.dart';
-import 'package:flutter_osc/util/DataUtils.dart';
-import 'package:flutter_osc/util/ThemeUtils.dart';
-import 'pages/NewsListPage.dart';
-import 'pages/TweetsListPage.dart';
-import 'pages/DiscoveryPage.dart';
-// import 'pages/HotPage.dart';
-import 'pages/MyInfoPage.dart';
+import './constants/Constants.dart';
+import './events/ChangeThemeEvent.dart';
+import './util/DataUtils.dart';
+import './util/ThemeUtils.dart';
+import './pages/NewsListPage.dart';
+import './pages/NewsTabPage.dart';
+import './pages/DiscoveryPage.dart';
+// import './pages/HotPage.dart';
+import './pages/MyInfoPage.dart';
 import './widgets/MyDrawer.dart';
 
 void main() {
-  runApp(new MyOSCClient());
+  runApp(new App());
 }
 
-class MyOSCClient extends StatefulWidget {
+class App extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new MyOSCClientState();
+  State<StatefulWidget> createState() => new AppState();
 }
 
-class MyOSCClientState extends State<MyOSCClient> {
-  final appBarTitles = ['首页', '推荐', '热点', '我的'];
+class AppState extends State<App> {
+  final appBarTitles = ['首页', '分类', '热点', '我的'];
   final appBarIcons = [
     Icon(Icons.home),
     Icon(Icons.tune),
@@ -29,7 +29,7 @@ class MyOSCClientState extends State<MyOSCClient> {
     Icon(Icons.person)
   ];
 
-  Color themeColor = ThemeUtils.currentColor;
+  Color themeColor = ThemeUtils.defaultColor;
 
   final tabTextStyleSelected = new TextStyle(color: Colors.black);
   final tabTextStyleNormal = new TextStyle(color: Color(0xff969696));
@@ -61,7 +61,7 @@ class MyOSCClientState extends State<MyOSCClient> {
     });
     pages = <Widget>[
       new NewsListPage(),
-      new TweetsListPage(),
+      new NewsTabPage(),
       new DiscoveryPage(),
       new MyInfoPage(),
 
@@ -110,9 +110,6 @@ class MyOSCClientState extends State<MyOSCClient> {
       ),
       
       home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text(appBarTitles[_tabIndex],),
-        ),
         drawer: new Drawer(
           child: new MyDrawer(
             name: '无忌0713',

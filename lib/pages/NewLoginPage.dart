@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_osc/constants/Constants.dart';
-import 'package:flutter_osc/pages/LoginPage.dart';
-import 'package:flutter_osc/util/DataUtils.dart';
-import 'package:flutter_osc/util/ThemeUtils.dart';
-import 'package:flutter_osc/widgets/CommonButton.dart';
+import '../constants/Constants.dart';
+import '../pages/LoginPage.dart';
+import '../util/DataUtils.dart';
+import '../util/ThemeUtils.dart';
+import '../widgets/CommonButton.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 // 新的登录界面，隐藏WebView登录页面
