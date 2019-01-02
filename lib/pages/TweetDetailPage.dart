@@ -105,8 +105,7 @@ class TweetDetailPageState extends State<TweetDetailPage> {
     );
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("动弹详情", style: new TextStyle(color: Colors.white)),
-        iconTheme: new IconThemeData(color: Colors.white),
+        title: new Text("动弹详情"),
         actions: <Widget>[
           new IconButton(
             icon: new Icon(Icons.send),

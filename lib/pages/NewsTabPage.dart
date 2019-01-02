@@ -40,7 +40,7 @@ class NewsTabPageState extends State<NewsTabPage>
     // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(
-        title: const Text('分类'),
+        title: Text('分类', style: new TextStyle(fontSize: 18.0),),
         elevation: 0.0,
         bottom: new TabBar(
           controller: _controller,

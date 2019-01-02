@@ -41,7 +41,7 @@ class NewsDetailPageState extends State<NewsDetailPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> titleContent = [];
-    titleContent.add(new Text(title, textAlign: TextAlign.left,));
+    titleContent.add(new Text(title, textAlign: TextAlign.left, style: TextStyle(fontSize: 18),));
     if (!loaded) {
       titleContent.add(new CupertinoActivityIndicator());
     }

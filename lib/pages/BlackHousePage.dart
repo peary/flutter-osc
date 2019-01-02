@@ -21,7 +21,7 @@ class BlackHousePage extends StatefulWidget {
 class BlackHousePageState extends State<BlackHousePage> {
   bool isLogin = true;
   List blackDataList;
-  TextStyle btnStyle = new TextStyle(color: Colors.white, fontSize: 12.0);
+  TextStyle btnStyle = new TextStyle(fontSize: 12.0);
 
   BlackHousePageState() {
     queryBlackList();
@@ -201,7 +201,6 @@ class BlackHousePageState extends State<BlackHousePage> {
                           "${blackDataList[index]['authoravatar']}"),
                       fit: BoxFit.cover),
                   border: new Border.all(
-                    color: Colors.white,
                     width: 2.0,
                   ),
                 ),
@@ -209,7 +208,7 @@ class BlackHousePageState extends State<BlackHousePage> {
               new Container(
                 margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
                 child:
-                    new Text(name, style: new TextStyle(color: Colors.white)),
+                    new Text(name),
               ),
               new InkWell(
                 child: new Container(
@@ -238,8 +237,7 @@ class BlackHousePageState extends State<BlackHousePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("动弹小黑屋", style: new TextStyle(color: Colors.white, )),
-        iconTheme: new IconThemeData(color: Colors.white),
+        title: new Text("动弹小黑屋"),
       ),
       body: new Padding(
         padding: const EdgeInsets.fromLTRB(2.0, 4.0, 2.0, 0.0),

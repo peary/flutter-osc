@@ -34,7 +34,6 @@ class _SearchPageState extends State<SearchPage> {
         hintStyle: TextStyle(color: Colors.white24),
       ),
       controller: controller,
-      style: TextStyle(color: Colors.white),
     );
 
     return new Scaffold(

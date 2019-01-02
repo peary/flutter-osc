@@ -148,8 +148,7 @@ class OfflineActivityPageState extends State<OfflineActivityPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("线下活动", style: new TextStyle(color: Colors.white)),
-        iconTheme: new IconThemeData(color: Colors.white),
+        title: new Text("线下活动"),
       ),
       body: new DefaultTabController(
         length: 3,

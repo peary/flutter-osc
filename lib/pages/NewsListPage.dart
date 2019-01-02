@@ -72,7 +72,7 @@ class NewsListPageState extends State<NewsListPage> {
     
     return new Scaffold(
         appBar: new AppBar(
-          title: const Text('首页'),
+          title: Text('首页', style: new TextStyle(fontSize: 18.0),),
           elevation: 0.0,
         ),
         body: body,

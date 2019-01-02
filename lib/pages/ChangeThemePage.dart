@@ -21,7 +21,7 @@ class ChangeThemePageState extends State<ChangeThemePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('切换主题'),
+        title: new Text('切换主题', style: TextStyle(fontSize: 18),),
       ),
       body: new Padding(
         padding: const EdgeInsets.all(4.0),

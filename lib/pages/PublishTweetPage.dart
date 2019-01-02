@@ -231,8 +231,7 @@ class PublishTweetPageState extends State<PublishTweetPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("发布动弹", style: new TextStyle(color: Colors.white)),
-        iconTheme: new IconThemeData(color: Colors.white),
+        title: new Text("发布动弹"),
         actions: <Widget>[
           new Builder(
             builder: (ctx) {
