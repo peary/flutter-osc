@@ -50,7 +50,7 @@ class NewsDetailPageState extends State<NewsDetailPage> {
       url: this.url,
       appBar: new AppBar(
         title: new Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: titleContent,
         ),
       ),

@@ -91,7 +91,7 @@ class AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("关于",),
+        title: new Text("关于", style: new TextStyle(fontSize: 18.0),),
       ),
       body: new Center(
         child: new Column(

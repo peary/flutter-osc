@@ -8,6 +8,7 @@ import './pages/NewsListPage.dart';
 import './pages/NewsTabPage.dart';
 import './pages/DiscoveryPage.dart';
 // import './pages/HotPage.dart';
+import 'pages/AboutPage.dart';
 import './pages/MyInfoPage.dart';
 import './widgets/MyDrawer.dart';
 
@@ -63,12 +64,9 @@ class AppState extends State<App> {
       new NewsListPage(),
       new NewsTabPage(),
       new DiscoveryPage(),
-      new MyInfoPage(),
+      new AboutPage(),
+      // new MyInfoPage(),
 
-      // new NewsListPage(),
-      // new AboutPage(),
-      // new AboutPage(),
-      // new AboutPage()
     ];
     
     _body = new IndexedStack(
