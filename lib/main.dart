@@ -63,7 +63,8 @@ class AppState extends State<App> {
     pages = <Widget>[
       new NewsListPage(),
       new NewsTabPage(),
-      new DiscoveryPage(),
+      // new DiscoveryPage(),
+      new AboutPage(),
       new AboutPage(),
       // new MyInfoPage(),
 

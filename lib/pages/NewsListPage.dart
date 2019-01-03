@@ -9,6 +9,7 @@ import '../widgets/CommonEndLine.dart';
 import '../widgets/SlideView.dart';
 import '../widgets/SlideViewIndicator.dart';
 import '../widgets/MyDrawer.dart';
+import '../widgets/NewsListView.dart';
 
 
 class NewsListPage extends StatefulWidget {
@@ -22,7 +23,7 @@ class NewsListPageState extends State<NewsListPage> {
   final TextStyle subtitleStyle = new TextStyle(color: const Color(0xFFB5BDC0), fontSize: 13.0);
 
   var curPage = 1;
-  var listTotalSize = 0;
+  var listTotalSize = 500;
 
   List listData;
   List slideData;
@@ -43,6 +44,7 @@ class NewsListPageState extends State<NewsListPage> {
         getNewsList(true);
       }
     });
+    getSlideList();
     getNewsList(false);
   }
 
@@ -87,21 +89,37 @@ class NewsListPageState extends State<NewsListPage> {
     );
   }
 
+  getSlideList(){
+    String url = Api.SLIDE_LIST;
+    print(url);
+    NetUtils.get(url).then((data) {
+      if (data != null) {
+        Iterable l = json.decode(data)['data'];
+        List<Post> result = l.map((m) => Post.fromJson(m)).toList();
+        if(result.length > 0 && slideData == null) {
+          setState(() {
+            slideData = result.sublist(0, 3);
+            initSlider();
+          });
+        }
+      }
+    });
+  }
+
   // 从网络获取数据，isLoadMore表示是否是加载更多数据
   getNewsList(bool isLoadMore) {
     String url = Api.NEWS_LIST;
     url += "&page=$curPage";
     print(url);
+    print(isLoadMore);
     NetUtils.get(url).then((data) {
       if (data != null) {
         // 将接口返回的json字符串解析为map类型
-        Iterable l = json.decode(data);
+        Iterable l = json.decode(data)['data'];
         List<Post> result = l.map((m) => Post.fromJson(m)).toList();
         
         if (result.length > 0) {
           // code=0表示请求成功
-          // total表示资讯总条数
-          listTotalSize = 500;
           // data为数据内容，其中包含slide和news两部分，分别表示头部轮播图数据，和下面的列表数据
           
           setState(() {
@@ -122,26 +140,12 @@ class NewsListPageState extends State<NewsListPage> {
               // 给列表数据赋值
               listData = newData;
             }
-            if (slideData == null) {
-              slideData = new List();
-              // 轮播图数据, 默认最新三条
-              for (var item in listData) {
-                if(item.thumbLink != '') {
-                  slideData.add(item);
-                  if(slideData.length >= 3) {
-                    break;
-                  }
-                }
-              }
-            }
-            // 初始化
-            initSlider();
           });
         }
       }
     });
   }
-
+  
   void initSlider() {
     indicator = new SlideViewIndicator(slideData.length);
     slideView = new SlideView(slideData, indicator);
@@ -216,16 +220,16 @@ class NewsListPageState extends State<NewsListPage> {
         )
       ],
     );
-    var thumbImgUrl = itemData.imageLink;
-    var thumbImg;
-    if (thumbImgUrl != null && thumbImgUrl.length > 0) {
-      thumbImg = new Container(
+    var articleImgUrl = itemData.imageLink;
+    var articleImg;
+    if (articleImgUrl != null && articleImgUrl != 'None' && articleImgUrl.length > 0) {
+      articleImg = new Container(
         margin: const EdgeInsets.all(6.0),
         decoration: new BoxDecoration(
           shape: BoxShape.rectangle,
           color: const Color(0xFFECECEC),
           image: new DecorationImage(
-              image: new NetworkImage(thumbImgUrl), 
+              image: new NetworkImage(articleImgUrl), 
               fit: BoxFit.cover,
           ),
           borderRadius: new BorderRadius.all(Radius.circular(8)),
@@ -237,7 +241,7 @@ class NewsListPageState extends State<NewsListPage> {
       );
     }
     var row;
-    if (thumbImg == null) {
+    if (articleImg == null) {
       row = new Row(
         children: <Widget>[
           new Expanded(
@@ -281,7 +285,7 @@ class NewsListPageState extends State<NewsListPage> {
               width: 120.0,
               height: 90.0,
               child: new Center(
-                child: thumbImg,
+                child: articleImg,
               ),
             ),
           )
@@ -290,7 +294,7 @@ class NewsListPageState extends State<NewsListPage> {
     }
     return new InkWell(
       child: row,
-      borderRadius: new BorderRadius.all(Radius.circular(8)),
+      // borderRadius: new BorderRadius.all(Radius.circular(8)),
       onTap: () {
         Navigator.of(context).push(new MaterialPageRoute(
           builder: (ctx) => new NewsDetailPage(url: itemData.hrefLink, title: itemData.title,)
@@ -302,7 +306,6 @@ class NewsListPageState extends State<NewsListPage> {
 
 
 class Post {
-    final int id;
     final String title;
     final String thumbLink;
     final String imageLink;
@@ -310,18 +313,41 @@ class Post {
     final String comments;
     final String postDate;
 
-    Post({this.id, this.title, this.thumbLink, this.imageLink, this.hrefLink, this.comments, this.postDate, });
+    Post({this.title, this.thumbLink, this.imageLink, this.hrefLink, this.comments, this.postDate, });
 
    factory Post.fromJson(Map<String, dynamic> json) {
-    print(json.toString()); 
     return new Post(
-      id: json['id'],
-      title: json['title']['rendered'].toString(),
-      thumbLink: json['post_thumbnail_image'],
-      imageLink: json['post_large_image'],
-      hrefLink: json['link'],
-      comments: json['total_comments'].toString(),
-      postDate: json['date'],
+      title: json['article_title'],
+      thumbLink: json['media_avatar'],
+      imageLink: json['article_image'],
+      hrefLink: json['article_url'],
+      comments: json['article_comments'].toString(),
+      postDate: json['article_ctime'],
     );
    }
 }
+
+// class Post {
+//     final int id;
+//     final String title;
+//     final String thumbLink;
+//     final String imageLink;
+//     final String hrefLink;
+//     final String comments;
+//     final String postDate;
+
+//     Post({this.id, this.title, this.thumbLink, this.imageLink, this.hrefLink, this.comments, this.postDate, });
+
+//    factory Post.fromJson(Map<String, dynamic> json) {
+//     print(json.toString()); 
+//     return new Post(
+//       id: json['id'],
+//       title: json['title']['rendered'].toString(),
+//       thumbLink: json['post_thumbnail_image'],
+//       imageLink: json['post_large_image'],
+//       hrefLink: json['link'],
+//       comments: json['total_comments'].toString(),
+//       postDate: json['date'],
+//     );
+//    }
+// }

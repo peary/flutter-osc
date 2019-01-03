@@ -8,9 +8,9 @@ import '../pages/NewsDetailPage.dart';
 import '../widgets/CommonEndLine.dart';
 
 class NewsList extends StatefulWidget {
-  String tagID;
+  String media;
   
-  NewsList({Key key, this.tagID}) : super(key: key);
+  NewsList({Key key, this.media}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new NewsListState();
@@ -19,7 +19,7 @@ class NewsList extends StatefulWidget {
 class NewsListState extends State<NewsList> {
   var listData;
   var curPage = 1;
-  var listTotalSize = 0;
+  var listTotalSize = 500;
 
   final ScrollController _controller = new ScrollController();
   final TextStyle titleTextStyle = new TextStyle(fontSize: 16.0);
@@ -71,20 +71,17 @@ class NewsListState extends State<NewsList> {
   getNewsList(bool isLoadMore) {
     String url = Api.NEWS_LIST;
     url += '&page=' + curPage.toString();
-    if(widget.tagID != '' ) {
-      url += '&tags=' + widget.tagID.toString();
+    if(widget.media != '' ) {
+      url += '&media=' + widget.media;
     }
     print(url);
     NetUtils.get(url).then((data) {
       if (data != null) {
         // 将接口返回的json字符串解析为map类型
-        Iterable l = json.decode(data);
+        Iterable l = json.decode(data)['data'];
         List<Post> result = l.map((m) => Post.fromJson(m)).toList();
         
         if (result.length > 0) {
-          // code=0表示请求成功
-          // total表示资讯总条数
-          listTotalSize = 500;
           // data为数据内容，其中包含slide和news两部分，分别表示头部轮播图数据，和下面的列表数据
           
           setState(() {
@@ -164,17 +161,17 @@ class NewsListState extends State<NewsList> {
         )
       ],
     );
-    var thumbImgUrl = itemData.thumbLink;
+    var articleImgUrl = itemData.imageLink;
 
-    var thumbImg;
-    if (thumbImgUrl != null && thumbImgUrl.length > 0) {
-      thumbImg = new Container(
+    var articleImg;
+    if (articleImgUrl != null && articleImgUrl != 'None' && articleImgUrl.length > 0) {
+      articleImg = new Container(
         margin: const EdgeInsets.all(6.0),
         decoration: new BoxDecoration(
           shape: BoxShape.rectangle,
           color: const Color(0xFFECECEC),
           image: new DecorationImage(
-              image: new NetworkImage(thumbImgUrl), 
+              image: new NetworkImage(articleImgUrl), 
               fit: BoxFit.cover,
           ),
           borderRadius: new BorderRadius.all(Radius.circular(8)),
@@ -186,7 +183,7 @@ class NewsListState extends State<NewsList> {
       );
     }
     var row;
-    if(thumbImg == null) {
+    if(articleImg == null) {
       row = new Row(
         children: <Widget>[
           new Expanded(
@@ -230,7 +227,7 @@ class NewsListState extends State<NewsList> {
               width: 120.0,
               height: 90.0,
               child: new Center(
-                child: thumbImg,
+                child: articleImg,
               ),
             ),
           )
@@ -249,9 +246,7 @@ class NewsListState extends State<NewsList> {
   }
 }
 
-
 class Post {
-    final int id;
     final String title;
     final String thumbLink;
     final String imageLink;
@@ -259,18 +254,16 @@ class Post {
     final String comments;
     final String postDate;
 
-    Post({this.id, this.title, this.thumbLink, this.imageLink, this.hrefLink, this.comments, this.postDate, });
+    Post({this.title, this.thumbLink, this.imageLink, this.hrefLink, this.comments, this.postDate, });
 
    factory Post.fromJson(Map<String, dynamic> json) {
-    print(json.toString()); 
     return new Post(
-      id: json['id'],
-      title: json['title']['rendered'].toString(),
-      thumbLink: json['post_thumbnail_image'],
-      imageLink: json['post_large_image'],
-      hrefLink: json['link'],
-      comments: json['total_comments'].toString(),
-      postDate: json['date'],
+      title: json['article_title'],
+      thumbLink: json['media_avatar'],
+      imageLink: json['article_image'],
+      hrefLink: json['article_url'],
+      comments: json['article_comments'].toString(),
+      postDate: json['article_ctime'],
     );
    }
 }
