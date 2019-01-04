@@ -47,7 +47,7 @@ class CommonWebPageState extends State<CommonWebPage> {
   Widget build(BuildContext context) {
     List<Widget> titleContent = [];
     titleContent.add(new Text(
-      widget.title,
+      widget.title, textAlign: TextAlign.left, style: new TextStyle(fontSize: 18.0),
     ));
     if (loading) {
       titleContent.add(new CupertinoActivityIndicator());
@@ -57,7 +57,7 @@ class CommonWebPageState extends State<CommonWebPage> {
       url: widget.url,
       appBar: new AppBar(
         title: new Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: titleContent,
         ),
       ),

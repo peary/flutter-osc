@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../util/NetUtils.dart';
 import '../api/Api.dart';
 import 'CommonWebPage.dart';
-import '../pages/NewsDetailPage.dart';
 
 class HotPage extends StatefulWidget {
   @override
@@ -14,6 +13,7 @@ class HotPage extends StatefulWidget {
 
 class HotPageState extends State<HotPage> {
   List hotTopics = new List();
+  String updateTime;
 
   final ScrollController _controller = new ScrollController();
 
@@ -22,6 +22,7 @@ class HotPageState extends State<HotPage> {
 
   final rightArrowIcon = new Image.asset('images/ic_arrow_right.png', width: ARROW_ICON_WIDTH, height: ARROW_ICON_WIDTH,);
   final titleTextStyle = new TextStyle(fontSize: 16.0);
+  final titleTextStyle_insight = new TextStyle(fontSize: 16.0, color: Colors.deepOrange);
 
   @override
   void initState() {
@@ -42,11 +43,14 @@ class HotPageState extends State<HotPage> {
             if (cards != null && cards.length > 0) {
               for (var i=0; i<cards.length; i++) {
                 var item = cards[i];
+                if (this.updateTime == null){
+                  this.updateTime = item['ctime'];
+                }
                 TopicItem topic = new TopicItem();
                 topic.topic = item['topic_name'];
                 topic.gotoUrl = item['topic_href'];
-                topic.hotDegree = item['topic_degree'].toString();
-                topic.rank = item['topic_rank'].toString();
+                topic.hotDegree = item['topic_rank'] == 0 ? '-' : item['topic_degree'].toString();
+                topic.rank = item['topic_rank'] == 0 ? '置顶' : item['topic_rank'].toString();
                 topic.icon = item['topic_icon'];
                 hotTopics.add(topic);
               }
@@ -64,19 +68,31 @@ class HotPageState extends State<HotPage> {
   }
 
   Widget renderRow(int i) {
+    if (i.isOdd) {
+      return new Divider(height: 1.0);
+    }
+
+    i = i ~/ 2;
     TopicItem topic = hotTopics[i];
     
     var listItem =  new Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
+      padding: const EdgeInsets.fromLTRB(0, 8.0, 6.0, 8.0),
       child: new Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          new Text(topic.rank, style: titleTextStyle),
           new Expanded(
-              child: new Text(topic.topic, style: titleTextStyle,)
+            flex: 1,
+            child: Text(topic.rank, style: titleTextStyle, textAlign: TextAlign.center,),
           ),
-          new Text(topic.hotDegree, style: titleTextStyle),
-          new Text(topic.icon, style: titleTextStyle)
+          new Expanded(
+            flex: 4,
+            child: 
+            topic.icon == '' ? new Text(topic.topic, style: titleTextStyle, textAlign: TextAlign.left, )
+            : new Text(topic.topic + '  ' + topic.icon, style: titleTextStyle_insight, textAlign: TextAlign.left, ),
+          ),
+          new Expanded(
+            flex: 2,
+            child: Text(topic.hotDegree, style: titleTextStyle, textAlign: TextAlign.right,),
+          ),
         ],
       ),
     );
@@ -100,17 +116,20 @@ class HotPageState extends State<HotPage> {
       );
     } else {
       Widget listView = new ListView.builder(
-        itemCount: hotTopics.length,
+        itemCount: (hotTopics.length - 1) * 2,
         itemBuilder: (context, i) => renderRow(i),
         controller: _controller,
       );
 
       return new Scaffold(
         appBar: new AppBar(
-          title: Text('热点', style: new TextStyle(fontSize: 16.0),),
+          title: Text('热点', style: new TextStyle(fontSize: 18.0),),
           elevation: 0.0,
         ),
-        body: new RefreshIndicator(child: listView, onRefresh: _pullToRefresh)
+        body: new RefreshIndicator(
+          child: listView,
+          onRefresh: _pullToRefresh
+        )
       );
     }
   }

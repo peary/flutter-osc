@@ -109,7 +109,7 @@ class AppState extends State<App> {
       ),
       
       home: new Scaffold(
-        drawer: new Drawer(
+        endDrawer: new Drawer(
           child: new MyDrawer(
             name: '无忌0713',
             email: '492874653@qq.com',
