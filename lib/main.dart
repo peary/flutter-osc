@@ -7,7 +7,7 @@ import './util/ThemeUtils.dart';
 import './pages/NewsListPage.dart';
 import './pages/NewsTabPage.dart';
 import './pages/DiscoveryPage.dart';
-// import './pages/HotPage.dart';
+import './pages/HotPage.dart';
 import 'pages/AboutPage.dart';
 import './pages/MyInfoPage.dart';
 import './widgets/MyDrawer.dart';
@@ -64,7 +64,7 @@ class AppState extends State<App> {
       new NewsListPage(),
       new NewsTabPage(),
       // new DiscoveryPage(),
-      new AboutPage(),
+      new HotPage(),
       new AboutPage(),
       // new MyInfoPage(),
 

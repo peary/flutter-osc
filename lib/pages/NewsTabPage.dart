@@ -29,11 +29,11 @@ class NewsTabPageState extends State<NewsTabPage>
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    if(_controller != null){
+      _controller.dispose();
+    }
     super.dispose();
-    _controller.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,9 @@ class NewsTabPageState extends State<NewsTabPage>
           isScrollable: true,
           tabs: _allPages.map((_Page page) {
             return
-              new Tab(text: page.text);
+              new Tab(
+                child: new Text(page.text, textAlign: TextAlign.center,)
+              );
           }).toList(),
         ),
       ),
@@ -74,12 +76,12 @@ class _Page {
 }
 // 存储所有页面的列表
 final List<_Page> _allPages = <_Page>[
-  new _Page(text: "全部",
-      newsList: new NewsList(media:(''))),
-  new _Page(text: "机器学习",
-      newsList: new NewsList(media:('机器之心,量子位,坤艮机器之心,新智元'))),
+  // new _Page(text: "全部",
+  //     newsList: new NewsList(media:(''))),
   new _Page(text: "科技资讯",
       newsList: new NewsList(media:('36氪,钛媒体APP,cnBeta,i黑马,差评,爱否科技,爱范儿,躺倒鸭,造就'))),
+  new _Page(text: "机器学习",
+      newsList: new NewsList(media:('机器之心,量子位,坤艮机器之心,新智元'))),
   new _Page(text: "金融财经",
       newsList: new NewsList(media:('一本财经,华尔街见闻,每日经济新闻,泽平宏观'))),
   new _Page(text: "医疗教育",

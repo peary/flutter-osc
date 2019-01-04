@@ -25,16 +25,16 @@ class CommonWebPageState extends State<CommonWebPage> {
     super.initState();
     // 监听WebView的加载事件
     flutterWebViewPlugin.onStateChanged.listen((state) {
-//      if (state.type == WebViewState.finishLoad) {
-//        // 加载完成
-//        setState(() {
-//          loading = false;
-//        });
-//      } else if (state.type == WebViewState.startLoad) {
-//        setState(() {
-//          loading = true;
-//        });
-//      }
+     if (state.type == WebViewState.finishLoad) {
+       // 加载完成
+       setState(() {
+         loading = false;
+       });
+     } else if (state.type == WebViewState.startLoad) {
+       setState(() {
+         loading = true;
+       });
+     }
     });
     flutterWebViewPlugin.onUrlChanged.listen((url) {
       setState(() {

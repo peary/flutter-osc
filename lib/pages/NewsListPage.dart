@@ -44,13 +44,14 @@ class NewsListPageState extends State<NewsListPage> {
         getNewsList(true);
       }
     });
-    getSlideList();
+    // getSlideList();
     getNewsList(false);
   }
 
 
   Future<Null> _pullToRefresh() async {
     curPage = 1;
+    // getSlideList();
     getNewsList(false);
     return null;
   }
@@ -89,22 +90,20 @@ class NewsListPageState extends State<NewsListPage> {
     );
   }
 
-  getSlideList(){
-    String url = Api.SLIDE_LIST;
-    print(url);
-    NetUtils.get(url).then((data) {
-      if (data != null) {
-        Iterable l = json.decode(data)['data'];
-        List<Post> result = l.map((m) => Post.fromJson(m)).toList();
-        if(result.length > 0 && slideData == null) {
-          setState(() {
-            slideData = result.sublist(0, 3);
-            initSlider();
-          });
-        }
-      }
-    });
-  }
+  // getSlideList(){
+  //   String url = Api.SLIDE_LIST;
+  //   print(url);
+  //   NetUtils.get(url).then((data) {
+  //     if (data != null) {
+  //       Iterable l = json.decode(data)['data'];
+  //       List<Post> result = l.map((m) => Post.fromJson(m)).toList();
+  //       if(result.length > 0 && slideData == null) {
+  //         slideData = result.sublist(0, 3);
+  //         initSlider();
+  //       }
+  //     }
+  //   });
+  // }
 
   // 从网络获取数据，isLoadMore表示是否是加载更多数据
   getNewsList(bool isLoadMore) {
@@ -139,6 +138,21 @@ class NewsListPageState extends State<NewsListPage> {
               }
               // 给列表数据赋值
               listData = newData;
+            }
+
+            if (slideData == null) {
+              slideData = new List();
+              // 轮播图数据, 默认最新三条
+              for (var item in listData) {
+                if(item.imageLink != 'None') {
+                  slideData.add(item);
+                  if(slideData.length >= 3) {
+                    break;
+                  }
+                }
+              }
+              // 初始化
+              initSlider();
             }
           });
         }

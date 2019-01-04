@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../util/NetUtils.dart';
 import '../api/Api.dart';
 import 'CommonWebPage.dart';
+import '../pages/NewsDetailPage.dart';
 
 class HotPage extends StatefulWidget {
   @override
@@ -34,22 +35,24 @@ class HotPageState extends State<HotPage> {
       if (data != null) {
         // 将接口返回的json字符串解析为map类型
         Map<String, dynamic> map = json.decode(data);
-        if (map['ok'] == 1) {
-          // hotTopics.addAll(map['data']['cards'][0]['card_group']);
-          var cards = map['data']['cards'];
-          if (cards != null && cards.length > 0) {
-            var items = cards[0]['card_group'];
-            for (var i=0; i<items.length; i++) {
-              var item = items[i];
-              TopicItem topic = new TopicItem();
-              topic.topic = item['desc'];
-              topic.gotoUrl = item['scheme'];
-              topic.hotDegree = item['desc_extr'];
-              topic.rank = (i + 1).toString();
-              hotTopics.add(topic);
+        if (map['code'] == 0) {
+          setState(() {
+            // hotTopics.addAll(map['data']['cards'][0]['card_group']);
+            var cards = map['data'];
+            if (cards != null && cards.length > 0) {
+              for (var i=0; i<cards.length; i++) {
+                var item = cards[i];
+                TopicItem topic = new TopicItem();
+                topic.topic = item['topic_name'];
+                topic.gotoUrl = item['topic_href'];
+                topic.hotDegree = item['topic_degree'].toString();
+                topic.rank = item['topic_rank'].toString();
+                topic.icon = item['topic_icon'];
+                hotTopics.add(topic);
+              }
+              print(hotTopics.length);
             }
-            print(hotTopics.length);
-          }
+          });
         }
       }
     });
@@ -66,18 +69,22 @@ class HotPageState extends State<HotPage> {
     var listItem =  new Padding(
       padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
       child: new Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           new Text(topic.rank, style: titleTextStyle),
           new Expanded(
               child: new Text(topic.topic, style: titleTextStyle,)
           ),
-          new Text(topic.hotDegree, style: titleTextStyle)
+          new Text(topic.hotDegree, style: titleTextStyle),
+          new Text(topic.icon, style: titleTextStyle)
         ],
       ),
     );
     return new InkWell(
       onTap: () {
-        return new CommonWebPage(title: topic.topic, url: topic.gotoUrl);
+        Navigator.of(context).push(new MaterialPageRoute(
+          builder: (ctx) => new CommonWebPage(url: topic.gotoUrl, title: topic.topic,)
+        ));
       },
       child: listItem,
     );
@@ -97,7 +104,14 @@ class HotPageState extends State<HotPage> {
         itemBuilder: (context, i) => renderRow(i),
         controller: _controller,
       );
-      return new RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
+
+      return new Scaffold(
+        appBar: new AppBar(
+          title: Text('热点', style: new TextStyle(fontSize: 16.0),),
+          elevation: 0.0,
+        ),
+        body: new RefreshIndicator(child: listView, onRefresh: _pullToRefresh)
+      );
     }
   }
 }
