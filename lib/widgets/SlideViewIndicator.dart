@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SlideViewIndicator extends StatefulWidget {
-  int count;
+  int count = 3;
   int selectedIndex = 0;
   SlideViewIndicatorState state;
 
-  SlideViewIndicator(count) {
-    this.count = count;
+  SlideViewIndicator(slideSize) {
+    this.count = slideSize;
     this.state = new SlideViewIndicatorState();
   }
 

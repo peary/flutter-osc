@@ -11,357 +11,57 @@ import '../widgets/SlideViewIndicator.dart';
 import '../widgets/MyDrawer.dart';
 import '../widgets/NewsListView.dart';
 
-
 class NewsListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new NewsListPageState();
 }
 
 class NewsListPageState extends State<NewsListPage> {
-  final ScrollController _controller = new ScrollController();
-  final TextStyle titleTextStyle = new TextStyle(fontSize: 16.0);
-  final TextStyle subtitleStyle = new TextStyle(color: const Color(0xFFB5BDC0), fontSize: 13.0);
-
-  var curPage = 1;
-  var listTotalSize = 500;
-
-  List listData;
-  List slideData;
 
   SlideView slideView;
   SlideViewIndicator indicator;
+  NewsList newsList;
 
   @override
   void initState() {
     super.initState();
-    _controller.addListener(() {
-      var maxScroll = _controller.position.maxScrollExtent;
-      var pixels = _controller.position.pixels;
-      if (maxScroll == pixels && listData.length < listTotalSize) {
-        // scroll to bottom, get next page data
-//        print("load more ... ");
-        curPage++;
-        getNewsList(true);
-      }
-    });
-    // getSlideList();
-    getNewsList(false);
-  }
-
-
-  Future<Null> _pullToRefresh() async {
-    curPage = 1;
-    // getSlideList();
-    getNewsList(false);
-    return null;
+    indicator = new SlideViewIndicator(3);
+    slideView = new SlideView(3, indicator);
   }
 
   @override
   Widget build(BuildContext context) {
-    var body;
-    if (listData == null) {
-      body = new Center(
-        // CircularProgressIndicator是一个圆形的Loading进度条
-        child: new CircularProgressIndicator(),
-      );
-    } else {
-      Widget listView = new ListView.builder(
-        itemCount: listData.length * 2,
-        itemBuilder: (context, i) => renderRow(i),
-        controller: _controller,
-      );
-      body = new RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
-    }
-    
     return new Scaffold(
-        appBar: new AppBar(
-          title: Text('首页', style: new TextStyle(fontSize: 18.0),),
-          elevation: 0.0,
-        ),
-        body: body,
-        drawer: new Drawer(
-          child: new MyDrawer(
-            name: '无忌0713',
-            email: '492874653@qq.com',
-            profileimg: "images/profile_3.jpg",
-            background: "images/bg_2.jpg",
-          ) 
-        ),
-    );
-  }
-
-  // getSlideList(){
-  //   String url = Api.SLIDE_LIST;
-  //   print(url);
-  //   NetUtils.get(url).then((data) {
-  //     if (data != null) {
-  //       Iterable l = json.decode(data)['data'];
-  //       List<Post> result = l.map((m) => Post.fromJson(m)).toList();
-  //       if(result.length > 0 && slideData == null) {
-  //         slideData = result.sublist(0, 3);
-  //         initSlider();
-  //       }
-  //     }
-  //   });
-  // }
-
-  // 从网络获取数据，isLoadMore表示是否是加载更多数据
-  getNewsList(bool isLoadMore) {
-    String url = Api.NEWS_LIST;
-    url += "&page=$curPage";
-    print(url);
-    print(isLoadMore);
-    NetUtils.get(url).then((data) {
-      if (data != null) {
-        // 将接口返回的json字符串解析为map类型
-        Iterable l = json.decode(data)['data'];
-        List<Post> result = l.map((m) => Post.fromJson(m)).toList();
-        
-        if (result.length > 0) {
-          // code=0表示请求成功
-          // data为数据内容，其中包含slide和news两部分，分别表示头部轮播图数据，和下面的列表数据
-          
-          setState(() {
-            if (!isLoadMore) {
-              // 不是加载更多，则直接为变量赋值
-              listData = result;
-            } else {
-              // 是加载更多，则需要将取到的news数据追加到原来的数据后面
-              List newData = new List();
-              // 添加原来的数据
-              newData.addAll(listData);
-              // 添加新取到的数据
-              newData.addAll(result);
-              // 判断是否获取了所有的数据，如果是，则需要显示底部的"我也是有底线的"布局
-              if (newData.length >= listTotalSize) {
-                newData.add(Constants.END_LINE_TAG);
-              }
-              // 给列表数据赋值
-              listData = newData;
-            }
-
-            if (slideData == null) {
-              slideData = new List();
-              // 轮播图数据, 默认最新三条
-              for (var item in listData) {
-                if(item.imageLink != 'None') {
-                  slideData.add(item);
-                  if(slideData.length >= 3) {
-                    break;
-                  }
-                }
-              }
-              // 初始化
-              initSlider();
-            }
-          });
-        }
-      }
-    });
-  }
-  
-  void initSlider() {
-    indicator = new SlideViewIndicator(slideData.length);
-    slideView = new SlideView(slideData, indicator);
-  }
-
-  Widget renderRow(i) {
-    if (i == 0) {
-      return new Container(
-        height: 180.0,
-        child: new Stack(
-          children: <Widget>[
-            slideView,
-            new Container(
-              alignment: Alignment.bottomCenter,
-              child: indicator,
-            )
-          ],
-        ),
-      );
-    }
-    i -= 1;
-    if (i.isOdd) {
-      return new Divider(height: 1.0);
-    }
-    i = i ~/ 2;
-
-    Post itemData = listData[i];
-    if (itemData is String && itemData == Constants.END_LINE_TAG) {
-      return new CommonEndLine();
-    }
-    var titleRow = new Row(
-      children: <Widget>[
-        new Expanded(
-          child: new Text(itemData.title, style: titleTextStyle),
-        )
-      ],
-    );
-    var timeRow = new Row(
-      children: <Widget>[
-        new Container(
-          width: 20.0,
-          height: 20.0,
-          decoration: new BoxDecoration(
-            shape: BoxShape.circle,
-            color: const Color(0xFFECECEC),
-            image: new DecorationImage(
-                image: new NetworkImage(itemData.thumbLink), 
-                fit: BoxFit.cover
-            ),
-            border: new Border.all(
-              color: const Color(0xFFECECEC),
-              width: 2.0,
-            ),
-          ),
-        ),
-        new Padding(
-          padding: const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0),
-          child: new Text(
-            itemData.postDate,
-            style: subtitleStyle,
-          ),
-        ),
-        new Expanded(
-          flex: 1,
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              new Text(itemData.comments, style: subtitleStyle),
-              new Image.asset('./images/ic_comment.png', width: 16.0, height: 16.0),
-            ],
-          ),
-        )
-      ],
-    );
-    var articleImgUrl = itemData.imageLink;
-    var articleImg;
-    if (articleImgUrl != null && articleImgUrl != 'None' && articleImgUrl.length > 0) {
-      articleImg = new Container(
-        margin: const EdgeInsets.all(6.0),
-        decoration: new BoxDecoration(
-          shape: BoxShape.rectangle,
-          color: const Color(0xFFECECEC),
-          image: new DecorationImage(
-              image: new NetworkImage(articleImgUrl), 
-              fit: BoxFit.cover,
-          ),
-          borderRadius: new BorderRadius.all(Radius.circular(8)),
-          // border: new Border.all(
-          //   color: const Color(0xFFECECEC),
-          //   width: 2.0,
-          // )
-        ),
-      );
-    }
-    var row;
-    if (articleImg == null) {
-      row = new Row(
+      appBar: new AppBar(
+        title: Text('首页', style: new TextStyle(fontSize: 18.0),),
+        elevation: 0.0,
+      ),
+      drawer: new Drawer(
+        child: new MyDrawer(
+          name: '无忌0713',
+          email: '492874653@qq.com',
+          profileimg: "images/profile_3.jpg",
+          background: "images/bg_2.jpg",
+        ) 
+      ),
+      body: new Column(
         children: <Widget>[
-          new Expanded(
-            flex: 1,
-            child: new Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: new Column(
-                children: <Widget>[
-                  titleRow,
-                  new Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8.0, 0.0, 0.0),
-                    child: timeRow,
-                  )
-                ],
-              ),
+          new Container(
+            height: 180.0,
+            child: new Stack(
+              children: <Widget>[
+                slideView,
+                new Container(
+                  alignment: Alignment.bottomCenter,
+                  child: indicator,
+                )              ],
             ),
+          ),
+          new Expanded(
+              child: new NewsList(media: '',),
           ),
         ],
-      );
-    } else {
-      row = new Row(
-        children: <Widget>[
-          new Expanded(
-            flex: 1,
-            child: new Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: new Column(
-                children: <Widget>[
-                  titleRow,
-                  new Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8.0, 0.0, 0.0),
-                    child: timeRow,
-                  )
-                ],
-              ),
-            ),
-          ),
-          new Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: new Container(
-              width: 120.0,
-              height: 90.0,
-              child: new Center(
-                child: articleImg,
-              ),
-            ),
-          )
-        ],
-      );
-    }
-    return new InkWell(
-      child: row,
-      // borderRadius: new BorderRadius.all(Radius.circular(8)),
-      onTap: () {
-        Navigator.of(context).push(new MaterialPageRoute(
-          builder: (ctx) => new NewsDetailPage(url: itemData.hrefLink, title: itemData.title,)
-        ));
-      },
+      ),
     );
   }
 }
-
-
-class Post {
-    final String title;
-    final String thumbLink;
-    final String imageLink;
-    final String hrefLink;
-    final String comments;
-    final String postDate;
-
-    Post({this.title, this.thumbLink, this.imageLink, this.hrefLink, this.comments, this.postDate, });
-
-   factory Post.fromJson(Map<String, dynamic> json) {
-    return new Post(
-      title: json['article_title'],
-      thumbLink: json['media_avatar'],
-      imageLink: json['article_image'],
-      hrefLink: json['article_url'],
-      comments: json['article_comments'].toString(),
-      postDate: json['article_ctime'],
-    );
-   }
-}
-
-// class Post {
-//     final int id;
-//     final String title;
-//     final String thumbLink;
-//     final String imageLink;
-//     final String hrefLink;
-//     final String comments;
-//     final String postDate;
-
-//     Post({this.id, this.title, this.thumbLink, this.imageLink, this.hrefLink, this.comments, this.postDate, });
-
-//    factory Post.fromJson(Map<String, dynamic> json) {
-//     print(json.toString()); 
-//     return new Post(
-//       id: json['id'],
-//       title: json['title']['rendered'].toString(),
-//       thumbLink: json['post_thumbnail_image'],
-//       imageLink: json['post_large_image'],
-//       hrefLink: json['link'],
-//       comments: json['total_comments'].toString(),
-//       postDate: json['date'],
-//     );
-//    }
-// }

@@ -109,14 +109,14 @@ class AppState extends State<App> {
       ),
       
       home: new Scaffold(
-        endDrawer: new Drawer(
-          child: new MyDrawer(
-            name: '无忌0713',
-            email: '492874653@qq.com',
-            profileimg: "images/profile_3.jpg",
-            background: "images/bg_2.jpg",
-          ) 
-        ),
+        // endDrawer: new Drawer(
+        //   child: new MyDrawer(
+        //     name: '无忌0713',
+        //     email: '492874653@qq.com',
+        //     profileimg: "images/profile_3.jpg",
+        //     background: "images/bg_2.jpg",
+        //   ) 
+        // ),
         body: _body,
         bottomNavigationBar: new BottomNavigationBar(
           items: <BottomNavigationBarItem>[
