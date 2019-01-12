@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../pages/NewsDetailPage.dart';
 import '../util/NetUtils.dart';
 import '../api/Api.dart';
+import '../model/PostInfo.dart';
 import 'SlideViewIndicator.dart';
 
 class SlideView extends StatefulWidget {
@@ -47,13 +48,6 @@ class SlideViewState extends State<SlideView> with SingleTickerProviderStateMixi
     super.dispose();
   }
 
-  Widget generateCard() {
-    return new Card(
-      color: Colors.blue,
-      child: new Image.asset("images/ic_avatar_default.png", width: 20.0, height: 20.0,),
-    );
-  }
-
   getSlideList(){
     String url = Api.SLIDE_LIST;
     print(url);
@@ -68,11 +62,6 @@ class SlideViewState extends State<SlideView> with SingleTickerProviderStateMixi
         }
       }
     });
-  }
-
-  Future<Null> _pullToRefresh() async {
-    getSlideList();
-    return null;
   }
 
   @override
@@ -111,44 +100,13 @@ class SlideViewState extends State<SlideView> with SingleTickerProviderStateMixi
         ));
       }
     }
-//    items.add(new Container(
-//      color: const Color(0x00000000),
-//      alignment: Alignment.bottomCenter,
-//      child: new SlideViewIndicator(slideData.length),
-//    ));
+    
     return new TabBarView(
       controller: tabController,
       children: items,
     );
     
-    // Widget listView = TabBarView(
-    //   controller: tabController,
-    //   children: items,
-    // );
-    // return new RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
   }
 
 }
 
-
-class Post {
-    final String title;
-    final String thumbLink;
-    final String imageLink;
-    final String hrefLink;
-    final String comments;
-    final String postDate;
-
-    Post({this.title, this.thumbLink, this.imageLink, this.hrefLink, this.comments, this.postDate, });
-
-   factory Post.fromJson(Map<String, dynamic> json) {
-    return new Post(
-      title: json['article_title'],
-      thumbLink: json['media_avatar'],
-      imageLink: json['article_image'],
-      hrefLink: json['article_url'],
-      comments: json['article_comments'].toString(),
-      postDate: json['article_ctime'],
-    );
-   }
-}

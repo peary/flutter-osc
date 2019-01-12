@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SlideViewIndicator extends StatefulWidget {
-  int count = 3;
+  int slideSize = 3;
   int selectedIndex = 0;
   SlideViewIndicatorState state;
 
   SlideViewIndicator(slideSize) {
-    this.count = slideSize;
+    this.slideSize = slideSize;
     this.state = new SlideViewIndicatorState();
   }
 
@@ -30,7 +30,7 @@ class SlideViewIndicatorState extends State<SlideViewIndicator> {
   @override
   Widget build(BuildContext context) {
     List<Widget> dots = [];
-    for (int i = 0; i < this.widget.count; i++) {
+    for (int i = 0; i < this.widget.slideSize; i++) {
       if (i == this.widget.selectedIndex) {
         // 选中的dot
         dots.add(new Container(

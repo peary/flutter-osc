@@ -6,11 +6,9 @@ import './util/DataUtils.dart';
 import './util/ThemeUtils.dart';
 import './pages/NewsListPage.dart';
 import './pages/NewsTabPage.dart';
-import './pages/DiscoveryPage.dart';
 import './pages/HotPage.dart';
 import 'pages/AboutPage.dart';
-import './pages/MyInfoPage.dart';
-import './widgets/MyDrawer.dart';
+
 
 void main() {
   runApp(new App());

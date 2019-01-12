@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../util/NetUtils.dart';
 import '../api/Api.dart';
 import 'dart:convert';
-import '../pages/LoginPage.dart';
 import '../util/DataUtils.dart';
 import '../util/Utf8Utils.dart';
 import '../constants/Constants.dart';

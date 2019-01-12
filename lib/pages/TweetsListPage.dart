@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../constants/Constants.dart';
 import '../events/LoginEvent.dart';
@@ -8,9 +11,6 @@ import '../util/BlackListUtils.dart';
 import '../api/Api.dart';
 import '../util/NetUtils.dart';
 import '../pages/TweetDetailPage.dart';
-import 'LoginPage.dart';
-import 'dart:convert';
-import 'dart:async';
 import '../util/DataUtils.dart';
 
 class TweetsListPage extends StatefulWidget {

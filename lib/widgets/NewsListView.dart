@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import '../model/PostInfo.dart';
 import '../util/NetUtils.dart';
 import '../api/Api.dart';
 import '../constants/Constants.dart';
@@ -126,20 +127,27 @@ class NewsListState extends State<NewsList> {
     );
     var timeRow = new Row(
       children: <Widget>[
-        new Container(
-          width: 20.0,
-          height: 20.0,
-          decoration: new BoxDecoration(
-            shape: BoxShape.circle,
-            color: const Color(0xFFECECEC),
-            image: new DecorationImage(
-                image: new NetworkImage(itemData.thumbLink), 
-                fit: BoxFit.cover
-            ),
-            border: new Border.all(
-              color: const Color(0xFFECECEC),
-              width: 2.0,
-            ),
+        // new Container(
+        //   width: 20.0,
+        //   height: 20.0,
+        //   decoration: new BoxDecoration(
+        //     shape: BoxShape.circle,
+        //     color: const Color(0xFFECECEC),
+        //     image: new DecorationImage(
+        //         image: new NetworkImage(itemData.mediaAvatar), 
+        //         fit: BoxFit.cover
+        //     ),
+        //     border: new Border.all(
+        //       color: const Color(0xFFECECEC),
+        //       width: 2.0,
+        //     ),
+        //   ),
+        // ),
+        new Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: new Text(
+            itemData.mediaName,
+            style: subtitleStyle,
           ),
         ),
         new Padding(
@@ -224,8 +232,8 @@ class NewsListState extends State<NewsList> {
           new Padding(
             padding: const EdgeInsets.all(4.0),
             child: new Container(
-              width: 120.0,
-              height: 90.0,
+              width: 110.0,
+              height: 80.0,
               child: new Center(
                 child: articleImg,
               ),
@@ -244,26 +252,4 @@ class NewsListState extends State<NewsList> {
       },
     );
   }
-}
-
-class Post {
-    final String title;
-    final String thumbLink;
-    final String imageLink;
-    final String hrefLink;
-    final String comments;
-    final String postDate;
-
-    Post({this.title, this.thumbLink, this.imageLink, this.hrefLink, this.comments, this.postDate, });
-
-   factory Post.fromJson(Map<String, dynamic> json) {
-    return new Post(
-      title: json['article_title'],
-      thumbLink: json['media_avatar'],
-      imageLink: json['article_image'],
-      hrefLink: json['article_url'],
-      comments: json['article_comments'].toString(),
-      postDate: json['article_ctime'],
-    );
-   }
 }

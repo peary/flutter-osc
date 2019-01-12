@@ -1,12 +1,5 @@
-import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../util/ThemeUtils.dart';
-import '../util/NetUtils.dart';
-import '../api/Api.dart';
-import '../constants/Constants.dart';
-import '../pages/NewsDetailPage.dart';
-import '../widgets/CommonEndLine.dart';
 import '../widgets/NewsListView.dart';
 
 
@@ -22,9 +15,12 @@ class NewsTabPageState extends State<NewsTabPage>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _controller = new TabController(vsync: this, length: _allPages.length);
+    _controller = new TabController(
+      initialIndex: 0,
+      vsync: this, 
+      length: _allPages.length
+    );
   }
 
   @override
@@ -45,20 +41,33 @@ class NewsTabPageState extends State<NewsTabPage>
         bottom: new TabBar(
           controller: _controller,
           indicatorColor: ThemeUtils.currentColor,
+          // indicatorPadding: EdgeInsets.all(1.0),
           isScrollable: true,
           tabs: _allPages.map((_Page page) {
             return
-              new Tab(
-                child: new Text(page.text, textAlign: TextAlign.center,)
-              );
+              new Tab(text: page.text);
           }).toList(),
         ),
+        actions: <Widget>[
+          new Padding(padding: const EdgeInsets.all(2.0),
+            child: new IconButton(
+              icon: new Icon(Icons.reorder),
+              onPressed: () {
+              },),
+          ),
+          new Padding(padding: const EdgeInsets.all(2.0),
+            child: new IconButton(
+              icon: new Icon(Icons.search),
+              onPressed: () {
+              },),),
+        ],
       ),
 
-      body: new TabBarView(controller: _controller,
-          children: _allPages.map((_Page page) {
-            return page.newsList;
-          }).toList()),
+      body: new TabBarView(
+        controller: _controller,
+        children: _allPages.map((_Page page) {
+          return page.newsList;
+        }).toList()),
     );
   }
 }

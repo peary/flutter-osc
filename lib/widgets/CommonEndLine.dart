@@ -5,7 +5,7 @@ class CommonEndLine extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Container(
       color: const Color(0xFFEEEEEE),
-      padding: const EdgeInsets.fromLTRB(5.0, 15.0, 5.0, 15.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
       child: new Row(
         children: <Widget>[
           new Expanded(

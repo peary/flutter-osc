@@ -5,7 +5,6 @@ import '../events/LoginEvent.dart';
 import '../events/LogoutEvent.dart';
 import '../util/ThemeUtils.dart';
 import '../pages/CommonWebPage.dart';
-import '../pages/LoginPage.dart';
 import '../pages/NewLoginPage.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
