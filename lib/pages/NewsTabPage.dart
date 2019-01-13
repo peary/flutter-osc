@@ -35,7 +35,15 @@ class NewsTabPageState extends State<NewsTabPage>
 
   @override
   Widget build(BuildContext context) {
+    var mydrawer = new Drawer(
+      child: MyDrawer(
+        name: '无忌0713',
+        email: '492874653@qq.com',
+        profileimg: "images/profile_3.jpg"
+      )
+    );
     return new Scaffold(
+      drawer: mydrawer,
       appBar: new AppBar(
         leading: new Padding(
           padding: const EdgeInsets.all(0.0),
@@ -44,19 +52,11 @@ class NewsTabPageState extends State<NewsTabPage>
             icon: new Icon(Icons.person),
             onPressed: () {
               Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
-                return new Drawer(
-                  child: MyDrawer(
-                    name: '无忌0713',
-                    email: '492874653@qq.com',
-                    profileimg: "images/profile_3.jpg",
-                    background: "images/bg_2.jpg",
-                  )
-                );
+                return mydrawer;
               }));
             },
           ),
         ),
-        
         elevation: 0.0,
         title: new TabBar(
           controller: _controller,

@@ -3,12 +3,13 @@ import '../pages/HotPage.dart';
 import '../pages/SearchPage.dart';
 import '../pages/AboutPage.dart';
 import '../pages/ChangeThemePage.dart';
+import '../util/ThemeUtils.dart';
 
 
 class MyDrawer extends StatelessWidget {
-  String email, name, profileimg, background;
+  String email, name, profileimg;
 
-  MyDrawer({this.background, this.profileimg, this.name, this.email});
+  MyDrawer({this.profileimg, this.name, this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +19,10 @@ class MyDrawer extends StatelessWidget {
           accountName: new Text(name),
           accountEmail: new Text(email),
           currentAccountPicture:
-              new CircleAvatar(backgroundImage: new AssetImage(profileimg)),
+            new CircleAvatar(backgroundImage: new AssetImage(profileimg)),
           decoration: new BoxDecoration(
-              image: new DecorationImage(
-                  image: new AssetImage(background), fit: BoxFit.cover)),
+            color: ThemeUtils.currentColor
+          ),
         ),
         new ListTile(
           title: new Text("我的订阅"),
