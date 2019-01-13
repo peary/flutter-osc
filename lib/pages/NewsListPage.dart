@@ -26,16 +26,8 @@ class NewsListPageState extends State<NewsListPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: Text('首页', style: new TextStyle(fontSize: 18.0),),
+        title: Text('首页', style: new TextStyle(fontSize: 16.0),),
         elevation: 0.0,
-      ),
-      endDrawer: new Drawer(
-        child: new MyDrawer(
-          name: '无忌0713',
-          email: '492874653@qq.com',
-          profileimg: "images/profile_3.jpg",
-          background: "images/bg_2.jpg",
-        ) 
       ),
       body: new Column(
         children: <Widget>[

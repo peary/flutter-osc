@@ -47,7 +47,7 @@ class CommonWebPageState extends State<CommonWebPage> {
   Widget build(BuildContext context) {
     List<Widget> titleContent = [];
     titleContent.add(new Text(
-      widget.title, textAlign: TextAlign.left, style: new TextStyle(fontSize: 18.0),
+      widget.title, textAlign: TextAlign.left, style: new TextStyle(fontSize: 16.0),
     ));
     if (loading) {
       titleContent.add(new CupertinoActivityIndicator());

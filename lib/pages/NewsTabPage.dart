@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../util/ThemeUtils.dart';
+import '../pages/SearchPage.dart';
 import '../widgets/NewsListView.dart';
+import '../widgets/MyDrawer.dart';
 
 
 class NewsTabPage extends StatefulWidget {
@@ -33,33 +35,50 @@ class NewsTabPageState extends State<NewsTabPage>
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(
-        title: Text('分类', style: new TextStyle(fontSize: 18.0),),
+        leading: new Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: new IconButton(
+            padding: EdgeInsets.all(0.0),
+            icon: new Icon(Icons.person),
+            onPressed: () {
+              Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
+                return new Drawer(
+                  child: MyDrawer(
+                    name: '无忌0713',
+                    email: '492874653@qq.com',
+                    profileimg: "images/profile_3.jpg",
+                    background: "images/bg_2.jpg",
+                  )
+                );
+              }));
+            },
+          ),
+        ),
+        
         elevation: 0.0,
-        bottom: new TabBar(
+        title: new TabBar(
           controller: _controller,
-          indicatorColor: ThemeUtils.currentColor,
-          // indicatorPadding: EdgeInsets.all(1.0),
+          labelPadding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+          indicatorColor: Colors.white,
+          indicatorPadding: EdgeInsets.zero,
           isScrollable: true,
           tabs: _allPages.map((_Page page) {
-            return
-              new Tab(text: page.text);
+            return new Tab(child: Text(page.text));
           }).toList(),
         ),
         actions: <Widget>[
-          new Padding(padding: const EdgeInsets.all(2.0),
-            child: new IconButton(
-              icon: new Icon(Icons.reorder),
-              onPressed: () {
-              },),
-          ),
-          new Padding(padding: const EdgeInsets.all(2.0),
+          new Padding(padding: const EdgeInsets.all(0.0),
             child: new IconButton(
               icon: new Icon(Icons.search),
               onPressed: () {
-              },),),
+                Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
+                  return new SearchPage();
+                }));
+              },
+            ),
+          ),
         ],
       ),
 
@@ -85,20 +104,18 @@ class _Page {
 }
 // 存储所有页面的列表
 final List<_Page> _allPages = <_Page>[
-  // new _Page(text: "全部",
-  //     newsList: new NewsList(media:(''))),
-  new _Page(text: "科技资讯",
-      newsList: new NewsList(media:('36氪,钛媒体APP,cnBeta,i黑马,差评,爱否科技,爱范儿,躺倒鸭,造就'))),
-  new _Page(text: "机器学习",
-      newsList: new NewsList(media:('机器之心,量子位,坤艮机器之心,新智元'))),
-  new _Page(text: "金融财经",
-      newsList: new NewsList(media:('一本财经,华尔街见闻,每日经济新闻,泽平宏观'))),
-  new _Page(text: "医疗教育",
-      newsList: new NewsList(media:('动脉网,芥末堆看教育'))),
-  new _Page(text: "新闻媒体",
-      newsList: new NewsList(media:('南方周末,正和岛,经济观察报'))),
-  new _Page(text: "初创动态",
-      newsList: new NewsList(media:('铅笔道'))),
+  new _Page(text: "全部",
+      newsList: new NewsList(media:(''))),
+  new _Page(text: "AI",
+      newsList: new NewsList(media:'机器之心,量子位,坤艮机器之心,新智元')),
+  new _Page(text: "科技",
+      newsList: new NewsList(media:'36氪,钛媒体APP,cnBeta,i黑马,差评,爱否科技,爱范儿,躺倒鸭,造就')),
+  new _Page(text: "财经",
+      newsList: new NewsList(media:'一本财经,华尔街见闻,每日经济新闻,泽平宏观')),
+  new _Page(text: "医疗",
+      newsList: new NewsList(media:'动脉网,芥末堆看教育')),
+  new _Page(text: "媒体",
+      newsList: new NewsList(media:'南方周末,正和岛,经济观察报')),
 ];
 
 

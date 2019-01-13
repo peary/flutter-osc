@@ -27,7 +27,7 @@ class DiscoveryPage extends StatelessWidget {
     "开源软件", "码云推荐", "代码片段", "扫一扫", "摇一摇", "码云封面人物", "线下活动"
   ];
   final rightArrowIcon = new Image.asset('images/ic_arrow_right.png', width: ARROW_ICON_WIDTH, height: ARROW_ICON_WIDTH,);
-  final titleTextStyle = new TextStyle(fontSize: 18.0);
+  final titleTextStyle = new TextStyle(fontSize: 16.0);
   List listData = [];
 
   DiscoveryPage() {

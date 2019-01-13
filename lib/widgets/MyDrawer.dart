@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../pages/HotPage.dart';
+import '../pages/SearchPage.dart';
 import '../pages/AboutPage.dart';
 import '../pages/ChangeThemePage.dart';
 
@@ -22,25 +24,29 @@ class MyDrawer extends StatelessWidget {
                   image: new AssetImage(background), fit: BoxFit.cover)),
         ),
         new ListTile(
-          title: new Text("更换主题"),
-          trailing: new Icon(
-            Icons.color_lens,
-          ),
+          title: new Text("我的订阅"),
+          trailing: new Icon(Icons.whatshot,),
           onTap: () {
-            print("Theme Color");
+            Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
+              return new SearchPage();
+            }));
+          },
+        ),
+        new ListTile(
+          title: new Text("更换主题"),
+          trailing: new Icon(Icons.color_lens,),
+          onTap: () {
             Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
               return new ChangeThemePage();
             }));
           },
-        ),new ListTile(
-          title: new Text("搜索"),
-          trailing: new Icon(
-            Icons.search,
-          ),
+        ),
+        new ListTile(
+          title: new Text("热点话题"),
+          trailing: new Icon(Icons.whatshot,),
           onTap: () {
-            print("Theme Color");
             Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
-              return new ChangeThemePage();
+              return new HotPage();
             }));
           },
         ),
@@ -53,7 +59,7 @@ class MyDrawer extends StatelessWidget {
           },
         ),
         new ListTile(
-          title: new Text("联系我们"),
+          title: new Text("关于我们"),
           trailing: new Icon(Icons.question_answer),
           onTap: () {
             Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {

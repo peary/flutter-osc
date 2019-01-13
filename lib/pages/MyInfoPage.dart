@@ -105,7 +105,7 @@ class MyInfoPageState extends State<MyInfoPage> {
     );
     return new Scaffold(
       appBar: new AppBar(
-        title: Text('我的', style: new TextStyle(fontSize: 18.0),),
+        title: Text('我的', style: new TextStyle(fontSize: 16.0),),
         elevation: 0.0,
       ),
       body: listView

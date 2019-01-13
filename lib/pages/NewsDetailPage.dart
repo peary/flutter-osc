@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class NewsDetailPage extends StatefulWidget {
@@ -41,7 +42,9 @@ class NewsDetailPageState extends State<NewsDetailPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> titleContent = [];
-    titleContent.add(new Text(title, textAlign: TextAlign.left, style: TextStyle(fontSize: 18),));
+    titleContent.add(
+      new Text(title, textAlign: TextAlign.left, style: TextStyle(fontSize: 16),)
+    );
     if (!loaded) {
       titleContent.add(new CupertinoActivityIndicator());
     }
@@ -53,10 +56,21 @@ class NewsDetailPageState extends State<NewsDetailPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: titleContent,
         ),
+        actions: <Widget>[
+          new Padding(
+            padding: EdgeInsets.all(0),
+            child: IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: () {
+              },
+            ) 
+          ),
+        ],
       ),
       withZoom: false,
       withLocalStorage: true,
       withJavascript: true,
+      allowFileURLs: true,
     );
   }
 }

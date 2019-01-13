@@ -123,7 +123,7 @@ class HotPageState extends State<HotPage> {
 
       return new Scaffold(
         appBar: new AppBar(
-          title: Text('热点', style: new TextStyle(fontSize: 18.0),),
+          title: Text('热点', style: new TextStyle(fontSize: 16.0),),
           elevation: 0.0,
         ),
         body: new RefreshIndicator(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../widgets/NewsListView.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -17,7 +18,6 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    changeContent();
   }
 
   @override
@@ -30,11 +30,19 @@ class _SearchPageState extends State<SearchPage> {
       },
       decoration: new InputDecoration(
         border: InputBorder.none,
-        hintText: '搜索真的好了，不骗你',
-        hintStyle: TextStyle(color: Colors.white24),
+        hintText: '搜索...',
       ),
       controller: controller,
     );
+
+    var body;
+    if (controller.text == null || controller.text == '') {
+      body = new Center(
+        child: Text('请输入关键词', style: TextStyle(fontSize: 16),),
+      );
+    } else {
+      body = new NewsList(search: controller.text);
+    }
 
     return new Scaffold(
       appBar: new AppBar(
@@ -54,7 +62,7 @@ class _SearchPageState extends State<SearchPage> {
               }),
         ],
       ),
-      body: new Text('doing'),
+      body: body,
     );
   }
 }

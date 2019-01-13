@@ -10,8 +10,9 @@ import '../widgets/CommonEndLine.dart';
 
 class NewsList extends StatefulWidget {
   String media;
+  String search;
   
-  NewsList({Key key, this.media}) : super(key: key);
+  NewsList({Key key, this.media, this.search}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new NewsListState();
@@ -72,8 +73,11 @@ class NewsListState extends State<NewsList> {
   getNewsList(bool isLoadMore) {
     String url = Api.NEWS_LIST;
     url += '&page=' + curPage.toString();
-    if(widget.media != '' ) {
+    if(widget.media != null && widget.media != '' ) {
       url += '&media=' + widget.media;
+    }
+    if(widget.search != null && widget.search != '') {
+      url += '&title=' + widget.search;
     }
     print(url);
     NetUtils.get(url).then((data) {
@@ -127,22 +131,6 @@ class NewsListState extends State<NewsList> {
     );
     var timeRow = new Row(
       children: <Widget>[
-        // new Container(
-        //   width: 20.0,
-        //   height: 20.0,
-        //   decoration: new BoxDecoration(
-        //     shape: BoxShape.circle,
-        //     color: const Color(0xFFECECEC),
-        //     image: new DecorationImage(
-        //         image: new NetworkImage(itemData.mediaAvatar), 
-        //         fit: BoxFit.cover
-        //     ),
-        //     border: new Border.all(
-        //       color: const Color(0xFFECECEC),
-        //       width: 2.0,
-        //     ),
-        //   ),
-        // ),
         new Padding(
           padding: const EdgeInsets.all(0.0),
           child: new Text(
