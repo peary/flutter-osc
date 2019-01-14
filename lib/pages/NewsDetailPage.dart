@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:share/share.dart';
 
 class NewsDetailPage extends StatefulWidget {
 
@@ -121,13 +122,19 @@ class NewsDetailPageState extends State<NewsDetailPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: titleContent,
         ),
-        actions: actions
+        actions: <Widget>[
+          new IconButton(
+            icon: Icon(Icons.share),
+            onPressed: (){
+              Share.share('分享自PaperPlane: ' + this.url);
+            },
+          )
+        ],
       ),
       withZoom: false,
       withLocalStorage: true,
       withJavascript: true,
       allowFileURLs: true,
-      supportMultipleWindows: true,
     );
   }
 }

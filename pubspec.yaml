@@ -27,6 +27,7 @@ dependencies:
   event_bus: ^1.0.1
   barcode_scan: ^0.0.4
   pull_to_refresh: ^1.1.6
+  share:
 
 dev_dependencies:
   flutter_test:
