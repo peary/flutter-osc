@@ -133,6 +133,7 @@ class NewsDetailPageState extends State<NewsDetailPage> {
       ),
       withZoom: false,
       withLocalStorage: true,
+      withLocalUrl: true,
       withJavascript: true,
       allowFileURLs: true,
     );
