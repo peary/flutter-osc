@@ -26,7 +26,7 @@ class MyDrawer extends StatelessWidget {
         ),
         new ListTile(
           title: new Text("我的订阅"),
-          trailing: new Icon(Icons.whatshot,),
+          trailing: new Icon(Icons.star_border,),
           onTap: () {
             Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
               return new SearchPage();
@@ -62,6 +62,15 @@ class MyDrawer extends StatelessWidget {
         new ListTile(
           title: new Text("关于我们"),
           trailing: new Icon(Icons.question_answer),
+          onTap: () {
+            Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
+              return new AboutPage();
+            }));
+          },
+        ),
+        new ListTile(
+          title: new Text("友情赞助"),
+          trailing: new Icon(Icons.payment),
           onTap: () {
             Navigator.of(context).push(new MaterialPageRoute(builder: (ctx) {
               return new AboutPage();

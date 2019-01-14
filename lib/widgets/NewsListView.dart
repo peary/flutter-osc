@@ -114,7 +114,7 @@ class NewsListState extends State<NewsList> {
 
   Widget renderRow(i) {
     if (i.isOdd) {
-      return new Divider(height: 1.0);
+      return new Divider(height: 2.0);
     }
     i = i ~/ 2;
 
@@ -185,7 +185,7 @@ class NewsListState extends State<NewsList> {
           new Expanded(
             flex: 1,
             child: new Padding(
-              padding: const EdgeInsets.all(6.0),
+              padding: const EdgeInsets.all(8.0),
               child: new Column(
                 children: <Widget>[
                   titleRow,
@@ -205,7 +205,7 @@ class NewsListState extends State<NewsList> {
           new Expanded(
             flex: 1,
             child: new Padding(
-              padding: const EdgeInsets.all(6.0),
+              padding: const EdgeInsets.all(8.0),
               child: new Column(
                 children: <Widget>[
                   titleRow,
