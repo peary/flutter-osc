@@ -40,63 +40,63 @@ class NewsDetailPageState extends State<NewsDetailPage> {
     });
   }
 
-  Widget PopupAction() {
-    return new PopupMenuButton<String>(
-      itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-        new PopupMenuItem<String>(
-          value: "likeUrl", 
-          // child: new Text('收藏链接', style: TextStyle(fontSize: 16),)
-          child: Row(children: <Widget>[
-            Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                child: Icon(Icons.star_border)),
-            Text('收藏链接')
-          ])
-        ),
-        new PopupMenuItem<String>(
-          value: "copyUrl", 
-          // child: new Text('复制链接', style: TextStyle(fontSize: 16),)
-          child: Row(children: <Widget>[
-            Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                child: Icon(Icons.content_copy)),
-            Text('复制链接')
-          ])
-        ),
-        new PopupMenuItem<String>(
-          value: "openUrl", 
-          // child: new Text('用浏览器打开', style: TextStyle(fontSize: 16),)
-          child: Row(children: <Widget>[
-            Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                child: Icon(Icons.open_in_browser)),
-            Text('用浏览器打开')
-          ])
-        ),
-        new PopupMenuItem<String>(
-          value: "shareTo", 
-          child: Row(children: <Widget>[
-            Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                child: Icon(Icons.share)),
-            Text('分享到')
-          ])
-        ),
-      ],
-      onSelected: (String value) {
-        switch (value) {
-          case "likeUrl":
-          // do nothing
-            break;
-          case "copyUrl":
-          // do nothing
-            break;
-          case "openUrl":
-          // do nothing
-            break;
-          case "shareTo":
-          // do nothing
-            break;
-        }
-      }
-    );
-  }
+  // Widget PopupAction() {
+  //   return new PopupMenuButton<String>(
+  //     itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+  //       new PopupMenuItem<String>(
+  //         value: "likeUrl", 
+  //         // child: new Text('收藏链接', style: TextStyle(fontSize: 16),)
+  //         child: Row(children: <Widget>[
+  //           Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+  //               child: Icon(Icons.star_border)),
+  //           Text('收藏链接')
+  //         ])
+  //       ),
+  //       new PopupMenuItem<String>(
+  //         value: "copyUrl", 
+  //         // child: new Text('复制链接', style: TextStyle(fontSize: 16),)
+  //         child: Row(children: <Widget>[
+  //           Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+  //               child: Icon(Icons.content_copy)),
+  //           Text('复制链接')
+  //         ])
+  //       ),
+  //       new PopupMenuItem<String>(
+  //         value: "openUrl", 
+  //         // child: new Text('用浏览器打开', style: TextStyle(fontSize: 16),)
+  //         child: Row(children: <Widget>[
+  //           Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+  //               child: Icon(Icons.open_in_browser)),
+  //           Text('用浏览器打开')
+  //         ])
+  //       ),
+  //       new PopupMenuItem<String>(
+  //         value: "shareTo", 
+  //         child: Row(children: <Widget>[
+  //           Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+  //               child: Icon(Icons.share)),
+  //           Text('分享到')
+  //         ])
+  //       ),
+  //     ],
+  //     onSelected: (String value) {
+  //       switch (value) {
+  //         case "likeUrl":
+  //         // do nothing
+  //           break;
+  //         case "copyUrl":
+  //         // do nothing
+  //           break;
+  //         case "openUrl":
+  //         // do nothing
+  //           break;
+  //         case "shareTo":
+  //         // do nothing
+  //           break;
+  //       }
+  //     }
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -111,9 +111,9 @@ class NewsDetailPageState extends State<NewsDetailPage> {
     }
     titleContent.add(new Container(width: 50.0));
     
-    actions = <Widget>[
-      PopupAction(),
-    ];
+    // actions = <Widget>[
+    //   PopupAction(),
+    // ];
 
     return new WebviewScaffold(
       url: this.url,
@@ -126,7 +126,7 @@ class NewsDetailPageState extends State<NewsDetailPage> {
           new IconButton(
             icon: Icon(Icons.share),
             onPressed: (){
-              Share.share('分享自PaperPlane: ' + this.url);
+              Share.share(this.title + ' [' + this.url + '][分享自PaperPlane]');
             },
           )
         ],
