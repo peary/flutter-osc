@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../model/PostInfo.dart';
 import '../util/NetUtils.dart';
 import '../api/Api.dart';

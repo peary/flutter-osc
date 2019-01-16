@@ -73,7 +73,7 @@ packages:
       name: http
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.12.0"
+    version: "0.12.0+1"
   http_parser:
     dependency: transitive
     description:
@@ -87,7 +87,7 @@ packages:
       name: image_picker
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.4.10"
+    version: "0.4.12"
   matcher:
     dependency: transitive
     description:
