@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/SlideView.dart';
 import '../widgets/SlideViewIndicator.dart';
-import '../widgets/MyDrawer.dart';
 import '../widgets/NewsListView.dart';
 
 class NewsListPage extends StatefulWidget {

@@ -31,6 +31,7 @@ class _SearchPageState extends State<SearchPage> {
       decoration: new InputDecoration(
         border: InputBorder.none,
         hintText: '搜索...',
+        hintStyle: TextStyle(color: Colors.white),
       ),
       controller: controller,
     );
@@ -49,17 +50,19 @@ class _SearchPageState extends State<SearchPage> {
         title: searchField,
         actions: <Widget>[
           new IconButton(
-              icon: new Icon(Icons.search),
-              onPressed: () {
-                changeContent();
-              }),
+            icon: new Icon(Icons.search),
+            onPressed: () {
+              changeContent();
+            }
+          ),
           new IconButton(
-              icon: new Icon(Icons.close),
-              onPressed: () {
-                setState(() {
-                  controller.clear();
-                });
-              }),
+            icon: new Icon(Icons.close),
+            onPressed: () {
+              setState(() {
+                controller.clear();
+              });
+            }
+          ),
         ],
       ),
       body: body,

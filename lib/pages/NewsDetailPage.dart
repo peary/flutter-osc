@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:share/share.dart';
@@ -20,7 +22,7 @@ class NewsDetailPageState extends State<NewsDetailPage> {
   String url;
   String title;
   bool loaded = false;
-  String detailDataStr;
+  
   final flutterWebViewPlugin = new FlutterWebviewPlugin();
 
   NewsDetailPageState({Key key, this.url, this.title});
@@ -40,112 +42,94 @@ class NewsDetailPageState extends State<NewsDetailPage> {
     });
   }
 
-  _initPopupActions() {
+  _initPopupMenu() {
     return new PopupMenuButton<String>(
       itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
         new PopupMenuItem<String>(
-          value: "likeUrl", 
-          // child: new Text('收藏链接', style: TextStyle(fontSize: 16),)
-          child: Row(children: <Widget>[
-            Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                child: IconButton(
-                  icon: Icon(Icons.star_border),
-                  onPressed: (){},
-                )
-            ),
-            Text('收藏链接')
-          ])
+          value: "likeURL", 
+          child: new ListTile(
+            title: new Text("收藏链接"),
+            trailing: new Icon(Icons.star_border,),
+            onTap: () {
+              Fluttertoast.showToast(msg: '收藏成功!');
+            },
+          ),
         ),
         new PopupMenuItem<String>(
-          value: "copyUrl", 
-          // child: new Text('复制链接', style: TextStyle(fontSize: 16),)
-          child: Row(children: <Widget>[
-            Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                child: IconButton(
-                  icon: Icon(Icons.content_copy),
-                  onPressed: (){},
-                )
-            ),
-            Text('复制链接')
-          ])
+          value: "copyURL", 
+          child: new ListTile(
+            title: new Text("复制链接"),
+            trailing: new Icon(Icons.content_copy,),
+            onTap: () {
+              _copy(this.url);
+            },
+          ),
         ),
         new PopupMenuItem<String>(
-          value: "openUrl", 
-          // child: new Text('用浏览器打开', style: TextStyle(fontSize: 16),)
-          child: Row(children: <Widget>[
-            Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                child: IconButton(
-                  icon: Icon(Icons.open_in_browser),
-                  onPressed: (){
-                    _launchURL(this.url);
-                  },
-                )),
-            Text('用浏览器打开')
-          ])
+          value: "openURL", 
+          child: new ListTile(
+            title: new Text("用浏览器打开"),
+            trailing: new Icon(Icons.open_in_browser,),
+            onTap: () {
+              _launchURL(this.url);
+            },
+          ),
         ),
         new PopupMenuItem<String>(
-          value: "shareTo", 
-          child: Row(children: <Widget>[
-            Padding( padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                child: IconButton(
-                  icon: Icon(Icons.share),
-                  onPressed: (){
-                    Share.share(this.title + ' [' + this.url + '][分享自PaperPlane]');
-                  },
-                ),
-              ),
-            Text('分享到')
-          ])
+          value: "shareURL", 
+          child: new ListTile(
+            title: new Text("分享到"),
+            trailing: new Icon(Icons.share,),
+            onTap: () {
+              Share.share(this.title + ' [' + this.url + '][分享自PaperPlane]');
+            },
+          ),
         ),
       ],
-      onSelected: (String value) {
-        switch (value) {
-          case "likeUrl":
-          // do nothing
-            break;
-          case "copyUrl":
-          // do nothing
-            break;
-          case "openUrl":
-          // do nothing
-            break;
-          case "shareTo":
-          // do nothing
-            break;
-        }
-      }
     );
   }
 
-  _launchURL(url) async {
+  _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      throw 'Could not launch $url';
+      Fluttertoast.showToast(msg: '链接打开失败!');
     }
+  }
+  
+  _copy(String content) {
+    Clipboard.setData(new ClipboardData(text: content));
+    Fluttertoast.showToast(msg: '链接已复制到剪切板!');
+  }
+  
+  _renderTitle() {
+    if (url == null || url.length == 0) {
+      return new Text(title);
+    }
+
+    String showTitle = title.length > 14 ? title.substring(0,15) + '...' : title;
+
+    List<Widget> titleContent = [
+      new Text(showTitle, textAlign: TextAlign.left, style: TextStyle(fontSize: 16),),
+    ];
+
+    if (!loaded) {
+      titleContent.add(new CupertinoActivityIndicator());
+    }
+
+    return new Row(
+      children: titleContent
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> titleContent = [];
-
-    titleContent.add(
-      new Text(title, textAlign: TextAlign.left, style: TextStyle(fontSize: 16),)
-    );
-    if (!loaded) {
-      titleContent.add(new CupertinoActivityIndicator());
-    }
-    titleContent.add(new Container(width: 50.0));
     
     return new WebviewScaffold(
-      url: this.url,
       appBar: new AppBar(
-        title: new Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: titleContent,
-        ),
+        title: _renderTitle(),
         actions: <Widget>[
-          _initPopupActions(),
+          _initPopupMenu(),
         ],
         // actions: <Widget>[
         //   new IconButton(
@@ -156,11 +140,10 @@ class NewsDetailPageState extends State<NewsDetailPage> {
         //   )
         // ],
       ),
-      withZoom: false,
-      withLocalStorage: true,
+      url: this.url,
+      scrollBar: true,
       withLocalUrl: true,
       withJavascript: true,
-      allowFileURLs: true,
     );
   }
 }

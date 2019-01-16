@@ -28,6 +28,7 @@ dependencies:
   barcode_scan: ^0.0.4
   pull_to_refresh: ^1.1.6
   share: any
+  fluttertoast:
 
 dev_dependencies:
   flutter_test:
