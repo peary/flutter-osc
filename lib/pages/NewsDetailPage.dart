@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -22,16 +23,32 @@ class NewsDetailPageState extends State<NewsDetailPage> {
   String url;
   String title;
   bool loaded = false;
-  
-  final flutterWebViewPlugin = new FlutterWebviewPlugin();
+
+  final _flutterWebView = new FlutterWebviewPlugin();
+  // URL变化监听器
+  StreamSubscription<String> _onUrlChanged;
+  // WebView加载状态变化监听器
+  StreamSubscription<WebViewStateChanged> _onStateChanged;
+
 
   NewsDetailPageState({Key key, this.url, this.title});
 
   @override
   void initState() {
     super.initState();
+
+    _flutterWebView.close();
+
     // 监听WebView的加载事件
-    flutterWebViewPlugin.onStateChanged.listen((state) {
+    _flutterWebView.onDestroy.listen((_) {
+      print("destroy");
+    });
+
+    _onUrlChanged = _flutterWebView.onUrlChanged.listen((String url) {
+      print("URL changed: " + this.url + " -> $url");
+    });
+
+    _onStateChanged = _flutterWebView.onStateChanged.listen((state) {
       print("state: ${state.type}");
       if (state.type == WebViewState.finishLoad) {
         // 加载完成
@@ -40,6 +57,15 @@ class NewsDetailPageState extends State<NewsDetailPage> {
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    // Every listener should be canceled, the same should be done with this stream.
+    _onUrlChanged.cancel();
+    _onStateChanged.cancel();
+    _flutterWebView.dispose();
+    super.dispose();
   }
 
   _initPopupMenu() {
@@ -131,14 +157,6 @@ class NewsDetailPageState extends State<NewsDetailPage> {
         actions: <Widget>[
           _initPopupMenu(),
         ],
-        // actions: <Widget>[
-        //   new IconButton(
-        //     icon: Icon(Icons.share),
-        //     onPressed: (){
-        //       Share.share(this.title + ' [' + this.url + '][分享自PaperPlane]');
-        //     },
-        //   )
-        // ],
       ),
       url: this.url,
       scrollBar: true,

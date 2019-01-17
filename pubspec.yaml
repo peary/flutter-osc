@@ -29,6 +29,7 @@ dependencies:
   pull_to_refresh: ^1.1.6
   share: any
   fluttertoast:
+  flutter_cache_manager:
 
 dev_dependencies:
   flutter_test:

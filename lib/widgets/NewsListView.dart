@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 // import 'package:url_launcher/url_launcher.dart';
 import '../model/PostInfo.dart';
 import '../util/NetUtils.dart';
@@ -8,6 +9,8 @@ import '../api/Api.dart';
 import '../constants/Constants.dart';
 import '../pages/NewsDetailPage.dart';
 import '../widgets/CommonEndLine.dart';
+
+
 
 class NewsList extends StatefulWidget {
   String media;
@@ -236,7 +239,10 @@ class NewsListState extends State<NewsList> {
       borderRadius: new BorderRadius.all(Radius.circular(8)),
       onTap: () {
         Navigator.of(context).push(new MaterialPageRoute(
-          builder: (ctx) => new NewsDetailPage(url: itemData.hrefLink, title: itemData.title,)
+          builder: (ctx) => new NewsDetailPage(
+            url: itemData.hrefLink, 
+            title: itemData.title,
+          )
         ));
       },
     );
